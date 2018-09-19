@@ -4,7 +4,7 @@ import 'package:kaiyan_client/gsd/common/model/User.dart';
 part 'PushEventCommit.g.dart';
 
 @JsonSerializable()
-class PushEventCommit {
+class PushEventCommit extends Object with _$PushEventCommitSerializerMixin{
   String sha;
   User author;
   String message;

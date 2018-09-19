@@ -6,7 +6,7 @@ import 'package:kaiyan_client/gsd/common/model/User.dart';
 part 'Repository.g.dart';
 
 @JsonSerializable()
-class Repository  {
+class Repository  extends Object with _$RepositorySerializerMixin {
 
   int id;
 

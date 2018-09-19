@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'TrendingRepoModel.g.dart';
 
 @JsonSerializable()
-class TrendingRepoModel{
+class TrendingRepoModel extends Object with _$TrendingRepoModelSerializerMixin{
 
   String fullName;
   String url;

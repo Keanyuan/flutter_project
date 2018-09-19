@@ -5,7 +5,7 @@ part 'ReleaseAsset.g.dart';
 
 
 @JsonSerializable()
-class ReleaseAsset{
+class ReleaseAsset  extends Object with _$ReleaseAssetSerializerMixin{
 
   int id;
   String name;

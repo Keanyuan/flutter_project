@@ -7,7 +7,7 @@ import 'package:kaiyan_client/gsd/common/model/Release.dart';
 part 'EventPayload.g.dart';
 
 @JsonSerializable()
-class EventPayload {
+class EventPayload extends Object with _$EventPayloadSerializerMixin{
   @JsonKey(name: "push_id")
   int pushId;
   int size;

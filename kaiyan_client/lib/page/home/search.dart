@@ -67,7 +67,8 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
                                     color: Colors.red,
                                   ),
                                   border: OutlineInputBorder(),
-                                  prefixIcon: Icon(Icons.save)))),
+                                  prefixIcon: Icon(Icons.save)
+                              ))),
                     ),
                     SizedBox(width: 10.0,),
                     GestureDetector(

@@ -213,8 +213,8 @@ class GSYICons {
   static const String FONT_FAMILY = 'wxcIconFont';
 //gsy_default_img.png gsy_logo.png gsy_welcome.png
 
-  static const String DEFAULT_USER_ICON = 'images/gsy_logo.png';
-  static const String DEFAULT_IMAGE = 'images/gsy_default_img.png';
+  static const String DEFAULT_USER_ICON = 'asset/images/gsy_logo.png';
+  static const String DEFAULT_IMAGE = 'asset/images/gsy_default_img.png';
   static const String DEFAULT_REMOTE_PIC = 'https://raw.githubusercontent.com/CarGuo/GSYGithubAppFlutter/master/static/images/logo.png';
   static const IconData HOME = const IconData(0xe624, fontFamily: GSYICons.FONT_FAMILY);
   static const IconData MORE = const IconData(0xe674, fontFamily: GSYICons.FONT_FAMILY);
@@ -257,6 +257,8 @@ class GSYICons {
   static const IconData ISSUE_EDIT_QUOTE = Icons.format_quote;
   static const IconData ISSUE_EDIT_CODE = Icons.format_shapes;
   static const IconData ISSUE_EDIT_LINK = Icons.insert_link;
+  static const IconData ISSUE_EDIT_LINKA = Icons.account_circle;
+
 
   static const IconData NOTIFY_ALL_READ = const IconData(0xe62f, fontFamily: GSYICons.FONT_FAMILY);
 

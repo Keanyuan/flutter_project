@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'RepositoryPermissions.g.dart';
 
 @JsonSerializable()
-class RepositoryPermissions {
+class RepositoryPermissions  extends Object with _$RepositoryPermissionsSerializerMixin{
   bool admin;
   bool push;
   bool pull;

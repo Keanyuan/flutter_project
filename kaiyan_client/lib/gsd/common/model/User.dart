@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'User.g.dart';
 
 @JsonSerializable()
-class User {
+class User  extends Object with _$UserSerializerMixin {
 
   String login;
   int id;

@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'License.g.dart';
 
 @JsonSerializable()
-class License {
+class License  extends Object with _$LicenseSerializerMixin{
 
   String name;
 

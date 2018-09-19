@@ -5,7 +5,7 @@ import 'package:kaiyan_client/gsd/common/model/User.dart';
 part 'IssueEvent.g.dart';
 
 @JsonSerializable()
-class IssueEvent {
+class IssueEvent extends Object with _$IssueEventSerializerMixin{
   int id;
   User user;
   @JsonKey(name: "created_at")

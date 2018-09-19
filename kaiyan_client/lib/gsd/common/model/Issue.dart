@@ -4,7 +4,7 @@ import 'package:kaiyan_client/gsd/common/model/User.dart';
 part 'Issue.g.dart';
 
 @JsonSerializable()
-class Issue {
+class Issue extends Object with _$IssueSerializerMixin{
   int id;
   int number;
   String title;

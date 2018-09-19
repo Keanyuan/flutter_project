@@ -7,11 +7,11 @@ part of 'IssueEvent.dart';
 // **************************************************************************
 
 IssueEvent _$IssueEventFromJson(Map<String, dynamic> json) {
-  return IssueEvent(
+  return new IssueEvent(
       json['id'] as int,
       json['user'] == null
           ? null
-          : User.fromJson(json['user'] as Map<String, dynamic>),
+          : new User.fromJson(json['user'] as Map<String, dynamic>),
       json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
@@ -25,15 +25,25 @@ IssueEvent _$IssueEventFromJson(Map<String, dynamic> json) {
       json['html_url'] as String);
 }
 
-Map<String, dynamic> _$IssueEventToJson(IssueEvent instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'user': instance.user,
-      'created_at': instance.createdAt?.toIso8601String(),
-      'updated_at': instance.updatedAt?.toIso8601String(),
-      'author_association': instance.authorAssociation,
-      'body': instance.body,
-      'body_html': instance.bodyHtml,
-      'event': instance.type,
-      'html_url': instance.htmlUrl
-    };
+abstract class _$IssueEventSerializerMixin {
+  int get id;
+  User get user;
+  DateTime get createdAt;
+  DateTime get updatedAt;
+  String get authorAssociation;
+  String get body;
+  String get bodyHtml;
+  String get type;
+  String get htmlUrl;
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'id': id,
+        'user': user,
+        'created_at': createdAt?.toIso8601String(),
+        'updated_at': updatedAt?.toIso8601String(),
+        'author_association': authorAssociation,
+        'body': body,
+        'body_html': bodyHtml,
+        'event': type,
+        'html_url': htmlUrl
+      };
+}

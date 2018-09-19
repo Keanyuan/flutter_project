@@ -5,7 +5,7 @@ import 'package:kaiyan_client/gsd/common/model/User.dart';
 part 'Event.g.dart';
 
 @JsonSerializable()
-class Event {
+class Event extends Object with _$EventSerializerMixin{
   String id;
   String type;
   User actor;

@@ -5,7 +5,7 @@ import 'package:kaiyan_client/gsd/common/model/User.dart';
 part 'Release.g.dart';
 
 @JsonSerializable()
-class Release {
+class Release  extends Object with _$ReleaseSerializerMixin{
   int id;
   @JsonKey(name: "tag_name")
   String tagName;

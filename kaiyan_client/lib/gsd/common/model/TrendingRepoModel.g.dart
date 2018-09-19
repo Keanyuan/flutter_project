@@ -7,7 +7,7 @@ part of 'TrendingRepoModel.dart';
 // **************************************************************************
 
 TrendingRepoModel _$TrendingRepoModelFromJson(Map<String, dynamic> json) {
-  return TrendingRepoModel(
+  return new TrendingRepoModel(
       json['fullName'] as String,
       json['url'] as String,
       json['description'] as String,
@@ -21,17 +21,29 @@ TrendingRepoModel _$TrendingRepoModelFromJson(Map<String, dynamic> json) {
       json['reposName'] as String);
 }
 
-Map<String, dynamic> _$TrendingRepoModelToJson(TrendingRepoModel instance) =>
-    <String, dynamic>{
-      'fullName': instance.fullName,
-      'url': instance.url,
-      'description': instance.description,
-      'language': instance.language,
-      'meta': instance.meta,
-      'contributors': instance.contributors,
-      'contributorsUrl': instance.contributorsUrl,
-      'starCount': instance.starCount,
-      'forkCount': instance.forkCount,
-      'name': instance.name,
-      'reposName': instance.reposName
-    };
+abstract class _$TrendingRepoModelSerializerMixin {
+  String get fullName;
+  String get url;
+  String get description;
+  String get language;
+  String get meta;
+  List<String> get contributors;
+  String get contributorsUrl;
+  String get starCount;
+  String get forkCount;
+  String get name;
+  String get reposName;
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'fullName': fullName,
+        'url': url,
+        'description': description,
+        'language': language,
+        'meta': meta,
+        'contributors': contributors,
+        'contributorsUrl': contributorsUrl,
+        'starCount': starCount,
+        'forkCount': forkCount,
+        'name': name,
+        'reposName': reposName
+      };
+}
