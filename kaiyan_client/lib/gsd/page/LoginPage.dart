@@ -7,11 +7,15 @@ import 'package:kaiyan_client/gsd/common/config/Config.dart';
 import 'package:kaiyan_client/gsd/common/dao/EventDao.dart';
 import 'package:kaiyan_client/gsd/common/dao/UserDao.dart';
 import 'package:kaiyan_client/gsd/common/local/LocalStorage.dart';
+import 'package:kaiyan_client/gsd/common/net/Code.dart';
+import 'package:kaiyan_client/gsd/common/net/ResultData.dart';
 import 'package:kaiyan_client/gsd/common/redux/GSYState.dart';
 import 'package:kaiyan_client/gsd/common/style/GSYColors.dart';
 import 'package:kaiyan_client/gsd/common/utils/CommonUtils.dart';
+import 'package:kaiyan_client/gsd/common/utils/NavigatorUtils.dart';
 import 'package:kaiyan_client/gsd/widget/GSYFlexButton.dart';
 import 'package:kaiyan_client/gsd/widget/GSYInputWidget.dart';
+import 'package:kaiyan_client/util/constant.dart';
 
 
 class LoginPage extends StatefulWidget{
@@ -49,8 +53,89 @@ class _LoginPageState extends State<LoginPage> {
   }
 
 
+  Widget buildPageWidget(context, store){
+    return new Container(
+//      color: Color(GSYColors.actionBlue),
+      child: new Center(
+        child: new Card(
+          elevation: 5.0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+          color: Color(GSYColors.primaryDarkTransparentValue),
+          margin: const EdgeInsets.all(30.0),
+          child: new Padding(
+            padding: new EdgeInsets.only(left: 30.0, top: 40.0, right: 30.0, bottom: 80.0),
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                new Image(image: new AssetImage(GSYICons.DEFAULT_USER_Login_ICON), width: 200.0, height: 90.0,),
+                new Padding(padding: new EdgeInsets.all(10.0)),
+                new GSYInputWidget(
+                  hintText:  CommonUtils.getLocale(context).login_username_hint_text,
+                  iconData: GSYICons.LOGIN_USER,
+                  onChanged: (String value){
+                    _userName = value;
+                  },
+                  controller: userController,
+                ),
+                new Padding(padding: new EdgeInsets.all(10.0)),
+                new GSYInputWidget(
+                  hintText: CommonUtils.getLocale(context).login_password_hint_text,
+                  iconData: GSYICons.LOGIN_PW,
+                  obscureText: true,
+                  onChanged: (String value) {
+                    _password = value;
+                  },
+                  controller: pwController,
+                ),
+                new Padding(padding: new EdgeInsets.all(30.0)),
+                new GSYFlexButton(
+                  text: CommonUtils.getLocale(context).login_text,
+                  color: Theme.of(context).primaryColor,
+                  textColor: Color(GSYColors.textWhite),
+                  onPress: ()async{
+                    UserDao.clearAll(store);
+                    EventDao.clearEvent(store);
+                    SqlManager.close();
+                    if (_userName == null || _userName.length == 0) {
+//                            CommonUtils.showDialogAlert(context, '请输入用户名');
+
+                      new ResultData(Code.errorHandleFunction(1001, '请输入用户名', false), false, 1001);
+
+                      return;
+                    }
+                    if (_password == null || _password.length == 0) {
+//                            CommonUtils.showDialogAlert(context, '请输入密码');
+                      new ResultData(Code.errorHandleFunction(1002, '请输入密码', false), false, 1002);
+
+                      return;
+                    }
+                    CommonUtils.showLoadingDialog(context);
+                    UserDao.login(_userName.trim(), _password.trim(), store).then((res) {
+                      Navigator.pop(context);
+                      if (res != null && res.result) {
+                        new Future.delayed(const Duration(seconds: 1), () {
+                                NavigatorUtils.goHome(context);
+                          return true;
+                        });
+                      }
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+
+
+
 
     return StoreBuilder<GSYState>(
       builder: (context, store){
@@ -60,73 +145,19 @@ class _LoginPageState extends State<LoginPage> {
             //隐藏键盘
             FocusScope.of(context).requestFocus(new FocusNode());
           },
-          child: new Container(
-            color: Color(GSYColors.actionBlue),
-            child: new Center(
-              child: new Card(
-                elevation: 5.0,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                color: Color(GSYColors.cardWhite),
-                margin: const EdgeInsets.all(30.0),
-                child: new Padding(
-                  padding: new EdgeInsets.only(left: 30.0, top: 40.0, right: 30.0, bottom: 80.0),
-                  child: new Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      new Image(image: new AssetImage(GSYICons.DEFAULT_USER_ICON), width: 90.0, height: 90.0,),
-                      new Padding(padding: new EdgeInsets.all(10.0)),
-                      new GSYInputWidget(
-                        hintText:  CommonUtils.getLocale(context).login_username_hint_text,
-                        iconData: GSYICons.LOGIN_USER,
-                        onChanged: (String value){
-                          _userName = value;
-                        },
-                        controller: userController,
-                      ),
-                      new Padding(padding: new EdgeInsets.all(10.0)),
-                      new GSYInputWidget(
-                        hintText: CommonUtils.getLocale(context).login_password_hint_text,
-                        iconData: GSYICons.LOGIN_PW,
-                        obscureText: true,
-                        onChanged: (String value) {
-                          _password = value;
-                        },
-                        controller: pwController,
-                      ),
-                      new Padding(padding: new EdgeInsets.all(30.0)),
-                      new GSYFlexButton(
-                        text: CommonUtils.getLocale(context).login_text,
-                        color: Theme.of(context).primaryColor,
-                        textColor: Color(GSYColors.textWhite),
-                        onPress: (){
-                          UserDao.clearAll(store);
-                          EventDao.clearEvent(store);
-                          SqlManager.close();
-//                          if (_userName == null || _userName.length == 0) {
-//                            return;
-//                          }
-//                          if (_password == null || _password.length == 0) {
-//                            return;
-//                          }
-                          CommonUtils.showLoadingDialog(context);
-                          UserDao.login(_userName.trim(), _password.trim(), store).then((res) {
-                            Navigator.pop(context);
-                            if (res != null && res.result) {
-                              new Future.delayed(const Duration(seconds: 1), () {
-//                                NavigatorUtils.goHome(context);
-                                return true;
-                              });
-                            }
-                          });
-                        },
-                      ),
-                    ],
-                  ),
+          child: new Stack(
+            children: <Widget>[
+              //背景图片
+              Container(
+                width: double.infinity,
+                height: double.infinity,
+                child: Image.asset(
+                  GSYICons.DEFAULT_USER_BG_ICON,
+                  fit: BoxFit.cover,
                 ),
-
               ),
-            ),
+              buildPageWidget(context, store)
+            ],
           ),
         );
       },

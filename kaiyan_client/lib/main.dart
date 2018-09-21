@@ -10,6 +10,7 @@ import 'package:kaiyan_client/gsd/common/net/Code.dart';
 import 'package:kaiyan_client/gsd/common/redux/GSYState.dart';
 import 'package:kaiyan_client/gsd/common/style/GSYColors.dart';
 import 'package:kaiyan_client/gsd/common/utils/CommonUtils.dart';
+import 'package:kaiyan_client/gsd/page/HomePage.dart';
 import 'package:kaiyan_client/gsd/page/LoginPage.dart';
 import 'package:kaiyan_client/gsd/page/WelcomePage.dart';
 import 'package:kaiyan_client/main_page.dart';
@@ -211,12 +212,12 @@ class FlutterReduxApp extends StatelessWidget {
                 store.state.platformLocale = Localizations.localeOf(context);
                 return WelcomePage();
               },
-//              HomePage.sName: (context) {
-//                ///通过 Localizations.override 包裹一层，
-//                return new GSYLocalizations(
-//                  child: new HomePage(),
-//                );
-//              },
+              HomePage.sName: (context) {
+                ///通过 Localizations.override 包裹一层，
+                return new GSYLocalizations(
+                  child: new HomePage(),
+                );
+              },
               LoginPage.sName: (context) {
                 return new GSYLocalizations(
                   child: new LoginPage(),
@@ -260,6 +261,7 @@ class _GSYLocalizations extends State<GSYLocalizations> {
   void initState() {
     super.initState();
     stream =  Code.eventBus.on<HttpErrorEvent>().listen((event) {
+      print(event.message + '------');
       errorHandleFunction(event.code, event.message);
     });
   }
@@ -292,7 +294,7 @@ class _GSYLocalizations extends State<GSYLocalizations> {
         Fluttertoast.showToast(msg: CommonUtils.getLocale(context).network_error_timeout);
         break;
       default:
-        Fluttertoast.showToast(msg: CommonUtils.getLocale(context).network_error_unknown + " " + message);
+        Fluttertoast.showToast(msg: CommonUtils.getLocale(context).network_error_unknown + " " + message, gravity: ToastGravity.CENTER);
         break;
     }
   }

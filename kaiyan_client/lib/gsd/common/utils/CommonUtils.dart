@@ -3,16 +3,19 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:kaiyan_client/gsd/common/localization/GSYLocalizations.dart';
+import 'package:kaiyan_client/gsd/common/net/Address.dart';
 import 'package:kaiyan_client/gsd/common/redux/GSYState.dart';
 import 'package:kaiyan_client/gsd/common/redux/LocaleReducer.dart';
 import 'package:kaiyan_client/gsd/common/redux/ThemeRedux.dart';
 import 'package:kaiyan_client/gsd/common/style/GSYColors.dart';
 import 'package:kaiyan_client/gsd/common/style/GSYStringBase.dart';
+import 'package:kaiyan_client/gsd/page/tool_page/IssueEditDialog.dart';
+import 'package:kaiyan_client/gsd/widget/GSYFlexButton.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_statusbar/flutter_statusbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 /**
  * 通用逻辑
  */
@@ -100,5 +103,126 @@ class CommonUtils {
               ));
         });
   }
+  //aler弹出框
+  static Future<Null> showDialogAlert(BuildContext context, String message){
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          content: new Text(message),
+          actions: <Widget>[
+            new FlatButton(onPressed: (){
+              Navigator.pop(context);
+              }, child: new Text('确定')
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  //切换主题对话框
+  static Future<Null> showCommitOptionDialog(
+      BuildContext context,
+      List<String> commitMaps,
+      ValueChanged<int> onTap, {
+        width = 250.0,
+        height = 400.0,
+        List<Color> colorList,
+      }) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Center(
+            child: new Container(
+              width: width,
+              height: height,
+              padding: new EdgeInsets.all(4.0),
+              margin: new EdgeInsets.all(20.0),
+              decoration: new BoxDecoration(
+                color: Color(GSYColors.white),
+                //用一个BoxDecoration装饰器提供背景图片
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+              ),
+              child: new ListView.builder(
+                  itemCount: commitMaps.length,
+                  itemBuilder: (context, index) {
+                    return GSYFlexButton(
+                      maxLines: 2,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      fontSize: 14.0,
+                      color: colorList != null ? colorList[index] : Theme.of(context).primaryColor,
+                      text: commitMaps[index],
+                      textColor: Color(GSYColors.white),
+                      onPress: () {
+                        Navigator.pop(context);
+                        onTap(index);
+                      },
+                    );
+                  }),
+            ),
+          );
+        });
+  }
+
+
+  //问题反馈弹框
+  static Future<Null> showEditDialog(
+      BuildContext context,
+      String dialogTitle,
+      ValueChanged<String> onTitleChanged,
+      ValueChanged<String> onContentChanged,
+      VoidCallback onPressed, {
+        TextEditingController titleController,
+        TextEditingController valueController,
+        bool needTitle = true,
+      }) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Center(
+            child: new IssueEditDialog(
+              dialogTitle,
+              onTitleChanged,
+              onContentChanged,
+              onPressed,
+              titleController: titleController,
+              valueController: valueController,
+              needTitle: needTitle,
+            ),
+          );
+        });
+  }
+
+
+
+  ///版本更新
+  static Future<Null> showUpdateDialog(BuildContext context, String contentMsg){
+    return showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: new Text(CommonUtils.getLocale(context).app_version_title),
+          content: new Text(contentMsg),
+          actions: <Widget>[
+            new FlatButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+                child: new Text(CommonUtils.getLocale(context).app_cancel)),
+            new FlatButton(
+                onPressed: () {
+                  launch(Address.updateUrl);
+                  Navigator.pop(context);
+                },
+                child: new Text(CommonUtils.getLocale(context).app_ok)),
+          ],
+        );
+      }
+    );
+  }
+
+
+
 
 }
