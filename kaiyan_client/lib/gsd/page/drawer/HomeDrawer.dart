@@ -116,6 +116,7 @@ class HomeDrawer extends StatelessWidget {
                         ),
                         onTap: (){
                           //TODO 阅读历史
+                          NavigatorUtils;
                         },
                       ),
 
@@ -123,7 +124,7 @@ class HomeDrawer extends StatelessWidget {
                       new ListTile(
                         title: new Text(CommonUtils.getLocale(context).home_user_info, style: GSYConstant.normalText),
                         onTap: (){
-                          //TODO 个人信息
+                          NavigatorUtils.gotoUserProfileInfo(context);
                         },
                       ),
 
@@ -154,8 +155,7 @@ class HomeDrawer extends StatelessWidget {
                             style: GSYConstant.normalText,
                           ),
                           onTap: () {
-                            //TODO 检测更新
-                            ReposDao.getNewsVersion(context, false);
+                            ReposDao.getNewsVersion(context, true);
                           }),
 
                       //关于
