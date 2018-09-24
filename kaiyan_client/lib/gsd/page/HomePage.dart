@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kaiyan_client/gsd/common/localization/GSYLocalizations.dart';
 import 'package:kaiyan_client/gsd/common/style/GSYColors.dart';
 import 'package:kaiyan_client/gsd/common/utils/CommonUtils.dart';
+import 'package:kaiyan_client/gsd/common/utils/NavigatorUtils.dart';
 import 'dart:async';
 
 import 'package:kaiyan_client/gsd/page/drawer/HomeDrawer.dart';
@@ -88,7 +89,7 @@ class HomePage extends StatelessWidget {
           needRightLocalIcon: true,
           onPressed: () {
             //TODO goSearchPage
-//            NavigatorUtils.goSearchPage(context);
+            NavigatorUtils.goSearchPage(context);
           },
         ),
       ),

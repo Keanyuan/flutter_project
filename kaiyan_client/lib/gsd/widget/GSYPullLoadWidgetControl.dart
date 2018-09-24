@@ -139,7 +139,9 @@ class _GSYPullLoadWidgetState extends State<GSYPullLoadWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           FlatButton(
-            onPressed: () {},
+            onPressed: () {
+              print('点击空页面');
+            },
             child: new Image(image: new AssetImage(GSYICons.DEFAULT_USER_ICON), width: 70.0, height: 70.0),
           ),
           Container(

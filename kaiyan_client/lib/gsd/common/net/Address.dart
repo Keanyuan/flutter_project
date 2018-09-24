@@ -64,4 +64,10 @@ class Address {
     }
   }
 
+
+
+  ///用户收到的事件信息 get
+  static getEventReceived(userName) {
+    return "${host}users/$userName/received_events";
+  }
 }

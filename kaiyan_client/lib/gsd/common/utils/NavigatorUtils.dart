@@ -1,7 +1,10 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:kaiyan_client/gsd/page/HomePage.dart';
 import 'package:kaiyan_client/gsd/page/LoginPage.dart';
+import 'package:kaiyan_client/gsd/page/SearchPage.dart';
 import 'package:kaiyan_client/gsd/page/my_page/UserProfileInfo.dart';
 import 'package:kaiyan_client/gsd/page/tool_page/CommonListPage.dart';
 
@@ -33,6 +36,11 @@ class NavigatorUtils {
               userName: userName,
               reposName: reposName,
             )));
+  }
+
+  ///搜索
+  static Future<Null> goSearchPage(BuildContext context) {
+    return Navigator.push(context, new MaterialPageRoute(builder: (context) => new SearchPage()));
   }
 
 }

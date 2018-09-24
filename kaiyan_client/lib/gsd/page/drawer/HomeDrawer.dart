@@ -116,8 +116,9 @@ class HomeDrawer extends StatelessWidget {
                         ),
                         onTap: (){
                           //TODO 阅读历史
-                          NavigatorUtils;
-                        },
+                          NavigatorUtils.gotoCommonList(context, CommonUtils.getLocale(context).home_history, "repository", "history",
+                              userName: "", reposName: "");
+                          },
                       ),
 
                       //个人信息
