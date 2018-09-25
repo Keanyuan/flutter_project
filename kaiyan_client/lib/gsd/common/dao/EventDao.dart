@@ -1,5 +1,7 @@
 
 import 'package:kaiyan_client/gsd/common/ab/provider/event/ReceivedEventDbProvider.dart';
+import 'package:kaiyan_client/gsd/common/ab/provider/event/UserEventDbProvider.dart';
+import 'package:kaiyan_client/gsd/common/dao/DataResult.dart';
 import 'package:kaiyan_client/gsd/common/model/Event.dart';
 import 'package:kaiyan_client/gsd/common/model/User.dart';
 import 'package:kaiyan_client/gsd/common/net/Address.dart';
@@ -63,6 +65,41 @@ class EventDao {
   }
 
 
+  /**
+   * 用户行为事件
+   */
+  static getEventDao(userName, {page = 0, bool needDb = false}) async {
+    UserEventDbProvider provider = new UserEventDbProvider();
+    next() async {
+      String url = Address.getEvent(userName) + Address.getPageParams("?", page);
+      var res = await HttpManager.netFetch(url, null, null, null);
+      if (res != null && res.result) {
+        List<Event> list = new List();
+        var data = res.data;
+        if (data == null || data.length == 0) {
+          return new DataResult(list, true);
+        }
+        if(needDb) {
+          provider.insert(userName, json.encode(data));
+        }
+        for (int i = 0; i < data.length; i++) {
+          list.add(Event.fromJson(data[i]));
+        }
+        return new DataResult(list, true);
+      } else {
+        return null;
+      }
+    }
+    if(needDb) {
+      List<Event> dbList = await provider.getEvents(userName);
+      if(dbList == null || dbList.length == 0) {
+        return await next();
+      }
+      DataResult dataResult = new DataResult(dbList, true, next: next());
+      return dataResult;
+    }
+    return await next();
+  }
 
   static clearEvent(Store store) {
     store.state.eventList.clear();

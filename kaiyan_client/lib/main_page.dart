@@ -23,7 +23,6 @@ class _MainPageState extends State<MainPage> {
     return ScopedModel<IndexModel>(
       model: IndexModel(),
       child: Scaffold(
-        //TODO
         body: SafeArea(child: _body()),
         bottomNavigationBar: Container(
           height: 49.0,

@@ -262,5 +262,10 @@ class CommonUtils {
   }
 
 
+  //获取用户图表地址
+  static String getUserChartAddress(String userName) {
+    return Address.graphicHost + GSYColors.primaryValueString.replaceAll("#", "") + "/" + userName;
+  }
+
 
 }

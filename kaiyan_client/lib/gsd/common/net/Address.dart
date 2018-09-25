@@ -52,9 +52,9 @@ class Address {
   }
 
   ///处理分页参数
-  static getPageParams(tab, page, [pageSize = Config.PAGE_SIZE]){
-    if(page == null){
-      if(pageSize != null){
+  static getPageParams(tab, page, [pageSize = Config.PAGE_SIZE]) {
+    if (page != null) {
+      if (pageSize != null) {
         return "${tab}page=$page&per_page=$pageSize";
       } else {
         return "${tab}page=$page";
@@ -65,9 +65,64 @@ class Address {
   }
 
 
-
   ///用户收到的事件信息 get
   static getEventReceived(userName) {
     return "${host}users/$userName/received_events";
+  }
+
+  ///搜索 get
+  static search(q, sort, order, type, page, [pageSize = Config.PAGE_SIZE]) {
+    //根据用户查询
+    if (type == 'user') {
+      return "${host}search/users?q=$q&page=$page&per_page=$pageSize";
+    }
+    sort ??= "best%20match";
+    order ??= "desc";
+    page ??= 1;
+    pageSize ??= Config.PAGE_SIZE;
+    //根据仓库名
+    return "${host}search/repositories?q=$q&sort=$sort&order=$order&page=$page&per_page=$pageSize";
+  }
+
+  ///获取用户组织
+  static getUserOrgs(userName) {
+    return "${host}users/$userName/orgs";
+  }
+
+  ///用户的仓库 get
+  static userRepos(userName, sort) {
+    sort ??= 'pushed';
+    return "${host}users/$userName/repos?sort=$sort";
+  }
+
+
+  ///用户关注 get
+  static getUserFollow(userName) {
+    return "${host}users/$userName/following";
+  }
+
+  ///用户的关注者 get
+  static getUserFollower(userName) {
+    return "${host}users/$userName/followers";
+  }
+
+  ///通知 get
+  static getNotifation(all, participating) {
+    if (all == null && participating == null) {
+      return "${host}notifications";
+    }
+    all ??= false;
+    participating ??= false;
+    return "${host}notifications?all=$all&participating=$participating";
+  }
+
+  ///获取组织成员
+  static getMember(orgs) {
+    return "${host}orgs/$orgs/members";
+  }
+
+  ///用户相关的事件信息 get
+  static getEvent(userName) {
+    return "${host}users/$userName/events";
   }
 }

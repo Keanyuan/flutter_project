@@ -22,6 +22,7 @@ class SearchPage extends StatefulWidget{
 class _SearchPageState extends GSYListState<SearchPage> {
 
   int selectIndex = 0;
+  //搜索名称
   String searchText;
   String type = searchFilterType[0].value;
   String sort = sortType[0].value;
@@ -55,7 +56,7 @@ class _SearchPageState extends GSYListState<SearchPage> {
 
   //获取数据
   _getDataLogic() async {
-//    return await ReposDao.searchRepositoryDao(searchText, language, type, sort, selectIndex == 0 ? null : 'user', page, Config.PAGE_SIZE);
+    return await ReposDao.searchRepositoryDao(searchText, language, type, sort, selectIndex == 0 ? null : 'user', page, Config.PAGE_SIZE);
   }
 
   //清除选中状态

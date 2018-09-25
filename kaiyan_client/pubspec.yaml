@@ -55,7 +55,7 @@ dependencies:
   sqflite: ^0.11.1
   #状态栏
   flutter_statusbar: ^0.0.1
-  #svg
+  #svg 图表样式
   flutter_svg: 0.5.4
   #侧滑
   flutter_slidable: ^0.4.3

@@ -2,12 +2,17 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:kaiyan_client/gsd/common/ab/provider/user/UserFollowedDbProvider.dart';
+import 'package:kaiyan_client/gsd/common/ab/provider/user/UserFollowerDbProvider.dart';
 import 'package:kaiyan_client/gsd/common/ab/provider/user/UserInfoDbProvider.dart';
+import 'package:kaiyan_client/gsd/common/ab/provider/user/UserOrgsDbProvider.dart';
 import 'package:kaiyan_client/gsd/common/config/Config.dart';
 import 'package:kaiyan_client/gsd/common/config/ignoreConfig.dart';
 import 'package:kaiyan_client/gsd/common/dao/DataResult.dart';
 import 'package:kaiyan_client/gsd/common/local/LocalStorage.dart';
+import 'package:kaiyan_client/gsd/common/model/Notification.dart';
 import 'package:kaiyan_client/gsd/common/model/User.dart';
+import 'package:kaiyan_client/gsd/common/model/UserOrg.dart';
 import 'package:kaiyan_client/gsd/common/net/Address.dart';
 import 'package:kaiyan_client/gsd/common/net/Api.dart';
 import 'package:kaiyan_client/gsd/common/redux/UserReducer.dart';
@@ -182,4 +187,163 @@ class UserDao {
     LocalStorage.remove(Config.USER_INFO);
     store.dispatch(new UpdateUserAction(User.empty()));
   }
+
+  /**
+   * 获取用户组织
+   */
+  static getUserOrgsDao(userName, page, {needDb = false}) async {
+    UserOrgsDbProvider provider = new UserOrgsDbProvider();
+    next() async {
+      String url = Address.getUserOrgs(userName) + Address.getPageParams("?", page);
+      var res = await HttpManager.netFetch(url, null, null, null);
+      if (res != null && res.result) {
+        List<UserOrg> list = new List();
+        var data = res.data;
+        if (data == null || data.length == 0) {
+          return new DataResult(null, false);
+        }
+        for (int i = 0; i < data.length; i++) {
+          list.add(new UserOrg.fromJson(data[i]));
+        }
+        if (needDb) {
+          provider.insert(userName, json.encode(data));
+        }
+        return new DataResult(list, true);
+      } else {
+        return new DataResult(null, false);
+      }
+    }
+
+    if (needDb) {
+      List<UserOrg> list = await provider.geData(userName);
+      if (list == null) {
+        return await next();
+      }
+      DataResult dataResult = new DataResult(list, true, next: next());
+      return dataResult;
+    }
+    return await next();
+  }
+
+  /**
+   * 获取用户关注列表
+   */
+  static getFollowedListDao(userName, page, {needDb = false}) async {
+    UserFollowedDbProvider provider = new UserFollowedDbProvider();
+    next() async {
+      String url = Address.getUserFollow(userName) + Address.getPageParams("?", page);
+      var res = await HttpManager.netFetch(url, null, null, null);
+      if (res != null && res.result) {
+        List<User> list = new List();
+        var data = res.data;
+        if (data == null || data.length == 0) {
+          return new DataResult(null, false);
+        }
+        for (int i = 0; i < data.length; i++) {
+          list.add(new User.fromJson(data[i]));
+        }
+        if (needDb) {
+          provider.insert(userName, json.encode(data));
+        }
+        return new DataResult(list, true);
+      } else {
+        return new DataResult(null, false);
+      }
+    }
+
+    if (needDb) {
+      List<User> list = await provider.geData(userName);
+      if (list == null) {
+        return await next();
+      }
+      DataResult dataResult = new DataResult(list, true, next: next());
+      return dataResult;
+    }
+    return await next();
+  }
+
+
+  /**
+   * 获取用户粉丝列表
+   */
+  static getFollowerListDao(userName, page, {needDb = false}) async {
+    UserFollowerDbProvider provider = new UserFollowerDbProvider();
+
+    next() async {
+      String url = Address.getUserFollower(userName) + Address.getPageParams("?", page);
+      var res = await HttpManager.netFetch(url, null, null, null);
+      if (res != null && res.result) {
+        List<User> list = new List();
+        var data = res.data;
+        if (data == null || data.length == 0) {
+          return new DataResult(null, false);
+        }
+        for (int i = 0; i < data.length; i++) {
+          list.add(new User.fromJson(data[i]));
+        }
+        if (needDb) {
+          provider.insert(userName, json.encode(data));
+        }
+        return new DataResult(list, true);
+      } else {
+        return new DataResult(null, false);
+      }
+    }
+
+    if (needDb) {
+      List<User> list = await provider.geData(userName);
+      if (list == null) {
+        return await next();
+      }
+      DataResult dataResult = new DataResult(list, true, next: next());
+      return dataResult;
+    }
+    return await next();
+  }
+
+  /**
+   * 获取用户相关通知
+   */
+  static getNotifyDao(bool all, bool participating, page) async {
+    String tag = (!all && !participating) ? '?' : "&";
+    String url = Address.getNotifation(all, participating) + Address.getPageParams(tag, page);
+    var res = await HttpManager.netFetch(url, null, null, null);
+    if (res != null && res.result) {
+      List<Notification> list = new List();
+      var data = res.data;
+      if (data == null || data.length == 0) {
+        return new DataResult([], true);
+      }
+      for (int i = 0; i < data.length; i++) {
+        list.add(Notification.fromJson(data[i]));
+      }
+      return new DataResult(list, true);
+    } else {
+      return new DataResult(null, false);
+    }
+  }
+
+
+  /**
+   * 组织成员
+   */
+  static getMemberDao(userName, page) async {
+    String url = Address.getMember(userName) + Address.getPageParams("?", page);
+    var res = await HttpManager.netFetch(url, null, null, null);
+    if (res != null && res.result) {
+      List<User> list = new List();
+      var data = res.data;
+      if (data == null || data.length == 0) {
+        return new DataResult(null, false);
+      }
+      for (int i = 0; i < data.length; i++) {
+        list.add(new User.fromJson(data[i]));
+      }
+      return new DataResult(list, true);
+    } else {
+      return new DataResult(null, false);
+    }
+  }
+
+
 }

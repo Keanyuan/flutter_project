@@ -40,7 +40,7 @@ class EventItem extends StatelessWidget {
         height: 30.0,
         image: eventViewModel.actionUserPic,
         onPressed: () {
-          //TODO 点击头像
+          //TODO 跳转个人中心
 //          NavigatorUtils.goPerson(context, eventViewModel.actionUser);
         })
         : Container();
@@ -71,8 +71,6 @@ class EventItem extends StatelessWidget {
     );
   }
 }
-
-
 
 class EventViewModel {
   String actionUser;

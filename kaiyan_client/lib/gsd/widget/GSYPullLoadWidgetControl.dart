@@ -4,19 +4,6 @@ import 'package:kaiyan_client/gsd/common/style/GSYColors.dart';
 import 'package:kaiyan_client/gsd/common/utils/CommonUtils.dart';
 
 
-
-class GSYPullLoadWidgetControl {
-  ///数据，对齐增减，不能替换
-  List dataList = new List();
-
-  ///是否需要加载更多
-  bool needLoadMore = true;
-
-  ///是否需要头部
-  bool needHeader = false;
-}
-
-
 ///通用下上刷新控件
 class GSYPullLoadWidget extends StatefulWidget {
   ///item渲染
@@ -139,9 +126,7 @@ class _GSYPullLoadWidgetState extends State<GSYPullLoadWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           FlatButton(
-            onPressed: () {
-              print('点击空页面');
-            },
+            onPressed: () {},
             child: new Image(image: new AssetImage(GSYICons.DEFAULT_USER_ICON), width: 70.0, height: 70.0),
           ),
           Container(
@@ -183,4 +168,15 @@ class _GSYPullLoadWidgetState extends State<GSYPullLoadWidget> {
       ),
     );
   }
+}
+
+class GSYPullLoadWidgetControl {
+  ///数据，对齐增减，不能替换
+  List dataList = new List();
+
+  ///是否需要加载更多
+  bool needLoadMore = true;
+
+  ///是否需要头部
+  bool needHeader = false;
 }

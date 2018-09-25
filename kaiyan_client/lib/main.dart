@@ -171,7 +171,6 @@ class _MainTabbarState extends State<MainTabbarController> {
 
 
 
-
 class FlutterReduxApp extends StatelessWidget {
   /// 创建Store，引用 GSYState 中的 appReducer 实现 Reducer 方法
   /// initialState 初始化 State
@@ -261,7 +260,6 @@ class _GSYLocalizations extends State<GSYLocalizations> {
   void initState() {
     super.initState();
     stream =  Code.eventBus.on<HttpErrorEvent>().listen((event) {
-      print(event.message + '------');
       errorHandleFunction(event.code, event.message);
     });
   }
@@ -294,7 +292,7 @@ class _GSYLocalizations extends State<GSYLocalizations> {
         Fluttertoast.showToast(msg: CommonUtils.getLocale(context).network_error_timeout);
         break;
       default:
-        Fluttertoast.showToast(msg: CommonUtils.getLocale(context).network_error_unknown + " " + message, gravity: ToastGravity.CENTER);
+        Fluttertoast.showToast(msg: CommonUtils.getLocale(context).network_error_unknown + " " + message);
         break;
     }
   }
