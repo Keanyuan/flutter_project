@@ -119,14 +119,13 @@ class EventUtils {
     return {"actionStr": actionStr, "des": des != null ? des : ""};
   }
 
-
+  ///跳转
   static ActionUtils(BuildContext context, Event event, currentRepository) {
     if (event.repo == null) {
       //todo 个人中心
-//      NavigatorUtils.goPerson(context, event.actor.login);
+      NavigatorUtils.goPerson(context, event.actor.login);
       return;
     }
-
     String owner = event.repo.name.split("/")[0];
     String repositoryName = event.repo.name.split("/")[1];
     String fullName = owner + '/' + repositoryName;

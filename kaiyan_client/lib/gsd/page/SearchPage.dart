@@ -3,6 +3,7 @@ import 'package:kaiyan_client/gsd/common/config/Config.dart';
 import 'package:kaiyan_client/gsd/common/dao/ReposDao.dart';
 import 'package:kaiyan_client/gsd/common/style/GSYColors.dart';
 import 'package:kaiyan_client/gsd/common/utils/CommonUtils.dart';
+import 'package:kaiyan_client/gsd/common/utils/NavigatorUtils.dart';
 import 'package:kaiyan_client/gsd/page/search_page/GSYSearchDrawer.dart';
 import 'package:kaiyan_client/gsd/page/search_page/GSYSearchInputWidget.dart';
 import 'package:kaiyan_client/gsd/page/search_page/SelectItemChanged.dart';
@@ -35,12 +36,13 @@ class _SearchPageState extends GSYListState<SearchPage> {
     if(selectIndex == 0){
       ReposViewModel reposViewModel =  ReposViewModel.fromMap(data);
       return new ReposItem(reposViewModel, onPressed: () {
-        //todo 点击头像
+        print("仓库详情");
+        //todo 仓库详情
 //        NavigatorUtils.goReposDetail(context, reposViewModel.ownerName, reposViewModel.repositoryName);
       });
     } else if (selectIndex == 1) {
       return new UserItem(UserItemViewModel.fromMap(data), onPressed: () {
-//        NavigatorUtils.goPerson(context, UserItemViewModel.fromMap(data).userName);
+        NavigatorUtils.goPerson(context, UserItemViewModel.fromMap(data).userName);
       });
     }
 

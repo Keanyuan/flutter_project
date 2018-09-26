@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:kaiyan_client/gsd/page/HomePage.dart';
 import 'package:kaiyan_client/gsd/page/LoginPage.dart';
 import 'package:kaiyan_client/gsd/page/SearchPage.dart';
+import 'package:kaiyan_client/gsd/page/my_page/PersonPage.dart';
+import 'package:kaiyan_client/gsd/page/my_page/PhotoViewPage.dart';
 import 'package:kaiyan_client/gsd/page/my_page/UserProfileInfo.dart';
 import 'package:kaiyan_client/gsd/page/tool_page/CommonListPage.dart';
 
@@ -43,4 +45,13 @@ class NavigatorUtils {
     return Navigator.push(context, new MaterialPageRoute(builder: (context) => new SearchPage()));
   }
 
+  ///图片预览
+  static gotoPhotoViewPage(BuildContext context, String url) {
+    Navigator.push(context, new MaterialPageRoute(builder: (context) => new PhotoViewPage(url)));
+  }
+
+  ///个人中心
+  static goPerson(BuildContext context, String userName){
+    Navigator.push(context, new MaterialPageRoute(builder: (context) => new PersonPage(userName)));
+  }
 }

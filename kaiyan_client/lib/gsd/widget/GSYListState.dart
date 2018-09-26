@@ -28,6 +28,7 @@ abstract class GSYListState<T extends StatefulWidget> extends State<T> with Auto
     });
   }
 
+  //添加数据
   @protected
   resolveRefreshResult(res) {
     if (res != null && res.result) {
@@ -79,13 +80,16 @@ abstract class GSYListState<T extends StatefulWidget> extends State<T> with Auto
     return null;
   }
 
+  //是否加载更多
   @protected
   resolveDataResult(res) {
     if (isShow) {
       setState(() {
-        print("<---------------->");
-        print(res != null && res.data != null && res.data.length == Config.PAGE_SIZE);
-        print("<---------------->");
+//        if (Config.DEBUG){
+//          print("<---------------->");
+//          print(res != null && res.data != null && res.data.length == Config.PAGE_SIZE);
+//          print("<---------------->");
+//        }
 
         pullLoadWidgetControl.needLoadMore = (res != null && res.data != null && res.data.length == Config.PAGE_SIZE);
       });

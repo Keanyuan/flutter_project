@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kaiyan_client/gsd/common/localization/GSYLocalizations.dart';
 import 'package:kaiyan_client/gsd/common/net/Address.dart';
 import 'package:kaiyan_client/gsd/common/redux/GSYState.dart';
@@ -267,5 +269,20 @@ class CommonUtils {
     return Address.graphicHost + GSYColors.primaryValueString.replaceAll("#", "") + "/" + userName;
   }
 
+  //浏览器打开URL
+  static launchOutURL(String url, BuildContext context) async {
+    if(await canLaunch(url)){
+      //forceSafariVC forceWebView
+      await launch(url);
+    } else {
+      Fluttertoast.showToast(msg: CommonUtils.getLocale(context).option_web_launcher_error + ": " + url);
+    }
+  }
+
+  //复制链接
+  static copy(String data, BuildContext context){
+    Clipboard.setData(new ClipboardData(text: data));
+    Fluttertoast.showToast(msg: CommonUtils.getLocale(context).option_share_copy_success);
+  }
 
 }

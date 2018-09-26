@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 import 'dart:async';
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:kaiyan_client/gsd/common/ab/provider/user/UserFollowedDbProvider.dart';
 import 'package:kaiyan_client/gsd/common/ab/provider/user/UserFollowerDbProvider.dart';
@@ -90,6 +91,7 @@ class UserDao {
 
     if (needDb) {
       User user = await provider.getUserInfo(userName);
+      //如果数据为空进行数据请求
       if (user == null) {
         return await next();
       }
@@ -345,5 +347,22 @@ class UserDao {
     }
   }
 
+  /**
+   * 检查用户关注状态
+   */
+  static checkFollowDao(name) async {
+    String url = Address.doFollow(name);
+    var res = await HttpManager.netFetch(url, null, null, new Options(contentType: ContentType.text), noTip: true);
+    return new DataResult(res.data, res.result);
+  }
+
+  /**
+   * 关注用户
+   */
+  static doFollowDao(name, bool followed) async {
+    String url = Address.doFollow(name);
+    var res = await HttpManager.netFetch(url, null, null, new Options(method: !followed ? "PUT" : "DELETE"), noTip: true);
+    return new DataResult(res.data, res.result);
+  }
 
 }

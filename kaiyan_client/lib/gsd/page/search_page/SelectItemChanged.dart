@@ -25,7 +25,6 @@ class GSYSelectItemWidget extends StatefulWidget implements PreferredSizeWidget 
   _GSYSelectItemWidgetState createState() => _GSYSelectItemWidgetState();
 
 
-  // TODO: implement preferredSize
   @override
   Size get preferredSize => new Size.fromHeight(height);
 }

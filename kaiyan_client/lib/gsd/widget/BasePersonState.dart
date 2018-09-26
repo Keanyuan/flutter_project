@@ -3,6 +3,8 @@ import 'package:kaiyan_client/gsd/common/dao/UserDao.dart';
 import 'package:kaiyan_client/gsd/common/model/Event.dart';
 import 'package:kaiyan_client/gsd/common/model/User.dart';
 import 'package:kaiyan_client/gsd/common/model/UserOrg.dart';
+import 'package:kaiyan_client/gsd/common/utils/EventUtils.dart';
+import 'package:kaiyan_client/gsd/common/utils/NavigatorUtils.dart';
 import 'package:kaiyan_client/gsd/page/search_page/UserItem.dart';
 import 'package:kaiyan_client/gsd/widget/EventItem.dart';
 import 'package:kaiyan_client/gsd/widget/GSYListState.dart';
@@ -24,13 +26,13 @@ abstract class BasePersonState<T extends StatefulWidget> extends GSYListState<T>
     if (userInfo.type == "Organization") {
       return new UserItem(UserItemViewModel.fromMap(pullLoadWidgetControl.dataList[index - 1]), onPressed: () {
         //TODO 个人中心
-//        NavigatorUtils.goPerson(context, UserItemViewModel.fromMap(pullLoadWidgetControl.dataList[index - 1]).userName);
+        NavigatorUtils.goPerson(context, UserItemViewModel.fromMap(pullLoadWidgetControl.dataList[index - 1]).userName);
       });
     } else {
       Event event = pullLoadWidgetControl.dataList[index - 1];
       return new EventItem(EventViewModel.fromEventMap(event), onPressed: () {
         //TODO 个人中心
-//        EventUtils.ActionUtils(context, event, "");
+        EventUtils.ActionUtils(context, event, "");
       });
     }
   }

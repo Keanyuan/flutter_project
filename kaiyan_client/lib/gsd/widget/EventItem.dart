@@ -5,6 +5,7 @@ import 'package:kaiyan_client/gsd/common/style/GSYColors.dart';
 import 'package:kaiyan_client/gsd/common/utils/CommonUtils.dart';
 import 'package:kaiyan_client/gsd/common/utils/EventUtils.dart';
 import 'package:kaiyan_client/gsd/common/model/Notification.dart' as Model;
+import 'package:kaiyan_client/gsd/common/utils/NavigatorUtils.dart';
 import 'package:kaiyan_client/gsd/page/tool_page/GSYCardItem.dart';
 import 'package:kaiyan_client/gsd/widget/GSYUserIconWidget.dart';
 
@@ -41,7 +42,7 @@ class EventItem extends StatelessWidget {
         image: eventViewModel.actionUserPic,
         onPressed: () {
           //TODO 跳转个人中心
-//          NavigatorUtils.goPerson(context, eventViewModel.actionUser);
+          NavigatorUtils.goPerson(context, eventViewModel.actionUser);
         })
         : Container();
     return new Container(

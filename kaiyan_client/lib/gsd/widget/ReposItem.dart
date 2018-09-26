@@ -1,6 +1,7 @@
 import 'package:kaiyan_client/gsd/common/model/Repository.dart';
 import 'package:flutter/material.dart';
 import 'package:kaiyan_client/gsd/common/style/GSYColors.dart';
+import 'package:kaiyan_client/gsd/common/utils/NavigatorUtils.dart';
 import 'package:kaiyan_client/gsd/page/tool_page/GSYCardItem.dart';
 import 'package:kaiyan_client/gsd/widget/GSYIConText.dart';
 import 'package:kaiyan_client/gsd/widget/GSYUserIconWidget.dart';
@@ -55,7 +56,7 @@ class ReposItem extends StatelessWidget {
                             image: reposViewModel.ownerPic,
                             onPressed: () {
                               //TODO 头像点击
-//                              NavigatorUtils.goPerson(context, reposViewModel.ownerName);
+                              NavigatorUtils.goPerson(context, reposViewModel.ownerName);
                             }),
                         new Expanded(
                           child: new Column(

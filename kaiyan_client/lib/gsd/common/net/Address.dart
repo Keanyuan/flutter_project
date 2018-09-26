@@ -125,4 +125,9 @@ class Address {
   static getEvent(userName) {
     return "${host}users/$userName/events";
   }
+
+  /// get 是否关注
+  static doFollow(name) {
+    return "${host}user/following/$name";
+  }
 }

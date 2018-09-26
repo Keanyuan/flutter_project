@@ -195,7 +195,7 @@ class UserHeaderItem extends StatelessWidget {
                       onPressed: (){
                         if (userInfo.avatar_url != null) {
                           //TODO 跳转到头像显示页面
-//                          NavigatorUtils.gotoPhotoViewPage(context, userInfo.avatar_url);
+                          NavigatorUtils.gotoPhotoViewPage(context, userInfo.avatar_url);
                         }
                       },
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -217,10 +217,12 @@ class UserHeaderItem extends StatelessWidget {
                       child: new Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          //登录名
-                          new Text(userInfo.login ?? "", style: GSYConstant.largeTextWhiteBold),
-                          //通知信息
-                          _getNotifyIcon(context, notifyColor),
+                          new Row(children: <Widget>[
+                            //登录名
+                            new Text(userInfo.login ?? "", style: GSYConstant.largeTextWhiteBold),
+                            //通知信息
+                            _getNotifyIcon(context, notifyColor),
+                          ],),
                           //用户名
                           new Text(userInfo.name == null ? "" : userInfo.name, style: GSYConstant.smallSubLightText),
                           ///用户组织
