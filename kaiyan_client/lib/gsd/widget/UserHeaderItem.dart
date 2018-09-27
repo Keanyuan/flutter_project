@@ -91,6 +91,7 @@ class UserHeaderItem extends StatelessWidget {
     }
     List<Widget> list = new List();
 
+    //所在组织
     renderOrgsItem(UserOrg orgs) {
       return GSYUserIconWidget(
           padding: const EdgeInsets.only(right: 5.0, left: 5.0),
@@ -98,8 +99,7 @@ class UserHeaderItem extends StatelessWidget {
           height: 30.0,
           image: orgs.avatarUrl ?? GSYICons.DEFAULT_REMOTE_PIC,
           onPressed: () {
-            //TODO 个人中心
-//            NavigatorUtils.goPerson(context, orgs.login);
+            NavigatorUtils.goPerson(context, orgs.login);
           });
     }
 
@@ -111,6 +111,7 @@ class UserHeaderItem extends StatelessWidget {
       list.add(renderOrgsItem(orgList[i]));
     }
     if (orgList.length > 3) {
+      //更多按钮
       list.add(new RawMaterialButton(
           onPressed: () {
             NavigatorUtils.gotoCommonList(context, userInfo.login + " " + CommonUtils.getLocale(context).user_orgs_title, "org", "user_orgs",
@@ -194,7 +195,6 @@ class UserHeaderItem extends StatelessWidget {
                     new RawMaterialButton(
                       onPressed: (){
                         if (userInfo.avatar_url != null) {
-                          //TODO 跳转到头像显示页面
                           NavigatorUtils.gotoPhotoViewPage(context, userInfo.avatar_url);
                         }
                       },
@@ -250,18 +250,28 @@ class UserHeaderItem extends StatelessWidget {
                 ),
                 ///用户博客
                 new Container(
-                  margin: new EdgeInsets.only(top: 6.0, bottom: 2.0),
-                  alignment: Alignment.topLeft,
-                  child: new GSYIConText(
-                    GSYICons.USER_ITEM_LINK,
-                    userInfo.blog ?? CommonUtils.getLocale(context).nothing_now,
-                    (userInfo.blog == null) ? GSYConstant.smallSubLightText : GSYConstant.smallActionLightText,
-                    Color(GSYColors.subLightTextColor),
-                    10.0,
-                    padding: 3.0,
-                  ),
+                    child: new RawMaterialButton(
+                      onPressed: () {
+                        if (userInfo.blog != null) {
+                          CommonUtils.launchOutURL(userInfo.blog, context);
+                        }
+                      },
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      padding: const EdgeInsets.all(0.0),
+                      constraints: const BoxConstraints(minWidth: 0.0, minHeight: 0.0),
+                      child: new GSYIConText(
+                        GSYICons.USER_ITEM_LINK,
+                        userInfo.blog ?? CommonUtils.getLocale(context).nothing_now,
+                        (userInfo.blog == null) ? GSYConstant.smallSubLightText : GSYConstant.smallActionLightText,
+                        Color(GSYColors.subLightTextColor),
+                        10.0,
+                        padding: 3.0,
+                      ),
+                    ),
+                    margin: new EdgeInsets.only(top: 6.0, bottom: 2.0),
+                    alignment: Alignment.topLeft
                 ),
-                ///组织
+                ///所在组织
                 _renderOrgs(context, orgList),
 
                 ///用户描述

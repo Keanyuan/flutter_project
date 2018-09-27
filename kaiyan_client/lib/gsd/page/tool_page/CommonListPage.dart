@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kaiyan_client/gsd/common/dao/ReposDao.dart';
 import 'package:kaiyan_client/gsd/common/dao/UserDao.dart';
+import 'package:kaiyan_client/gsd/common/utils/NavigatorUtils.dart';
 import 'package:kaiyan_client/gsd/page/search_page/UserItem.dart';
 import 'package:kaiyan_client/gsd/widget/GSYListState.dart';
 import 'package:kaiyan_client/gsd/widget/GSYPullLoadWidgetControl.dart';
@@ -50,15 +51,15 @@ class _CommonListPageState extends GSYListState<CommonListPage> {
         ReposViewModel reposViewModel = ReposViewModel.fromMap(data);
         return new ReposItem(reposViewModel, onPressed: () {
           //跳转详情
-//          NavigatorUtils.goReposDetail(context, reposViewModel.ownerName, reposViewModel.repositoryName);
+          NavigatorUtils.goReposDetail(context, reposViewModel.ownerName, reposViewModel.repositoryName);
         });
       case 'user':
         return new UserItem(UserItemViewModel.fromMap(data), onPressed: () {
-//          NavigatorUtils.goPerson(context, data.login);
+          NavigatorUtils.goPerson(context, data.login);
         });
       case 'org':
         return new UserItem(UserItemViewModel.fromOrgMap(data), onPressed: () {
-//          NavigatorUtils.goPerson(context, data.login);
+          NavigatorUtils.goPerson(context, data.login);
         });
       case 'issue':
         return null;
@@ -80,11 +81,11 @@ class _CommonListPageState extends GSYListState<CommonListPage> {
       case 'user_star':
         return await ReposDao.getStarRepositoryDao(userName, page, null, needDb: page <= 1);
       case 'repo_star':
-//        return await ReposDao.getRepositoryStarDao(userName, reposName, page, needDb: page <= 1);
+        return await ReposDao.getRepositoryStarDao(userName, reposName, page, needDb: page <= 1);
       case 'repo_watcher':
-//        return await ReposDao.getRepositoryWatcherDao(userName, reposName, page, needDb: page <= 1);
+        return await ReposDao.getRepositoryWatcherDao(userName, reposName, page, needDb: page <= 1);
       case 'repo_fork':
-//        return await ReposDao.getRepositoryForksDao(userName, reposName, page, needDb: page <= 1);
+        return await ReposDao.getRepositoryForksDao(userName, reposName, page, needDb: page <= 1);
       case 'repo_release':
         return null;
       case 'repo_tag':
@@ -94,7 +95,7 @@ class _CommonListPageState extends GSYListState<CommonListPage> {
       case 'history':
         return await ReposDao.getHistoryDao(page);
       case 'topics':
-//        return await ReposDao.searchTopicRepositoryDao(userName, page: page);
+        return await ReposDao.searchTopicRepositoryDao(userName, page: page);
       case 'user_be_stared':
         return null;
       case 'user_orgs':

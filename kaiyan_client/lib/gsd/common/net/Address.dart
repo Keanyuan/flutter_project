@@ -130,4 +130,78 @@ class Address {
   static doFollow(name) {
     return "${host}user/following/$name";
   }
+
+  //获取branches
+  static getbranches(reposOwner, reposName) {
+    return "${host}repos/$reposOwner/$reposName/branches";
+  }
+
+  ///关注仓库 put
+  static resolveStarRepos(reposOwner, repos) {
+    return "${host}user/starred/$reposOwner/$repos";
+  }
+
+  ///订阅仓库 put
+  static resolveWatcherRepos(reposOwner, repos) {
+    return "${host}user/subscriptions/$reposOwner/$repos";
+  }
+
+  ///创建 fork post
+  static createFork(reposOwner, reposName) {
+    return "${host}repos/$reposOwner/$reposName/forks";
+  }
+
+  ///搜索topic tag
+  static searchTopic(topic) {
+    return "${host}search/repositories?q=topic:$topic&sort=stars&order=desc";
+  }
+
+
+  ///仓库Star get
+  static getReposStar(reposOwner, reposName) {
+    return "${host}repos/$reposOwner/$reposName/stargazers";
+  }
+
+  ///仓库Fork get
+  static getReposForks(reposOwner, reposName) {
+    return "${host}repos/$reposOwner/$reposName/forks";
+  }
+
+  ///仓库Watch get
+  static getReposWatcher(reposOwner, reposName) {
+    return "${host}repos/$reposOwner/$reposName/subscribers";
+  }
+
+  ///仓库提交详情 get
+  static getReposCommitsInfo(reposOwner, reposName, sha) {
+    return "${host}repos/$reposOwner/$reposName/commits/$sha";
+  }
+
+  ///仓库路径下的内容 get
+  static reposDataDir(reposOwner, repos, path, [branch = 'master']) {
+    return "${host}repos/$reposOwner/$repos/contents/$path" + ((branch == null) ? "" : ("?ref=" + branch));
+  }
+
+  ///仓库提交 get列表
+  static getReposCommits(reposOwner, reposName) {
+    return "${host}repos/$reposOwner/$reposName/commits";
+  }
+
+  ///仓库活动 get 列表
+  static getReposEvent(reposOwner, reposName) {
+    return "${host}networks/$reposOwner/$reposName/events";
+  }
+
+  ///仓库详情 get
+  static getReposDetail(reposOwner, reposName) {
+    return "${host}repos/$reposOwner/$reposName";
+  }
+
+  ///仓库Issue get
+  static getReposIssue(reposOwner, reposName, state, sort, direction) {
+    state ??= 'all';
+    sort ??= 'created';
+    direction ??= 'desc';
+    return "${host}repos/$reposOwner/$reposName/issues?state=$state&sort=$sort&direction=$direction";
+  }
 }

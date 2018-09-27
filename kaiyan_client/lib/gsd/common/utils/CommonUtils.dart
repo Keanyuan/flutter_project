@@ -11,6 +11,7 @@ import 'package:kaiyan_client/gsd/common/redux/LocaleReducer.dart';
 import 'package:kaiyan_client/gsd/common/redux/ThemeRedux.dart';
 import 'package:kaiyan_client/gsd/common/style/GSYColors.dart';
 import 'package:kaiyan_client/gsd/common/style/GSYStringBase.dart';
+import 'package:kaiyan_client/gsd/common/utils/NavigatorUtils.dart';
 import 'package:kaiyan_client/gsd/page/tool_page/IssueEditDialog.dart';
 import 'package:kaiyan_client/gsd/widget/GSYFlexButton.dart';
 import 'package:redux/redux.dart';
@@ -267,6 +268,64 @@ class CommonUtils {
   //获取用户图表地址
   static String getUserChartAddress(String userName) {
     return Address.graphicHost + GSYColors.primaryValueString.replaceAll("#", "") + "/" + userName;
+  }
+
+  static const IMAGE_END = [".png", ".jpg", ".jpeg", ".gif", ".svg"];
+
+  static isImageEnd(path) {
+    bool image = false;
+    for (String item in IMAGE_END) {
+      if (path.indexOf(item) + item.length == path.length) {
+        image = true;
+      }
+    }
+    return image;
+  }
+  //打卡URL
+  static launchUrl(context, String url) {
+    if (url == null && url.length == 0) return;
+    Uri parseUrl = Uri.parse(url);
+    bool isImage = isImageEnd(parseUrl.toString());
+    if (parseUrl.toString().endsWith("?raw=true")) {
+      isImage = isImageEnd(parseUrl.toString().replaceAll("?raw=true", ""));
+    }
+    if (isImage) {
+      //是图片 放大图片
+      NavigatorUtils.gotoPhotoViewPage(context, url);
+      return;
+    }
+
+    if (parseUrl != null && parseUrl.host == "github.com" && parseUrl.path.length > 0) {
+      List<String> pathnames = parseUrl.path.split("/");
+      if (pathnames.length == 2) {
+        //解析人
+        String userName = pathnames[1];
+        //跳转到个人中心
+        NavigatorUtils.goPerson(context, userName);
+      } else if (pathnames.length >= 3) {
+        String userName = pathnames[1];
+        String repoName = pathnames[2];
+        //解析仓库
+        if (pathnames.length == 3) {
+          //跳转到仓库详情
+          NavigatorUtils.goReposDetail(context, userName, repoName);
+        } else {
+          launchWebView(context, "", url);
+        }
+      }
+    } else if (url != null && url.startsWith("http")) {
+      launchWebView(context, "", url);
+    }
+  }
+
+  //打开webview
+  static void launchWebView(BuildContext context, String title, String url) {
+    if (url.startsWith("http") || url.startsWith("https")) {
+      NavigatorUtils.goGSYWebView(context, url, title);
+    } else {
+      NavigatorUtils.goGSYWebView(
+          context, new Uri.dataFromString(url, mimeType: 'text/html', encoding: Encoding.getByName("utf-8")).toString(), title);
+    }
   }
 
   //浏览器打开URL

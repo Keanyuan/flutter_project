@@ -36,9 +36,7 @@ class _SearchPageState extends GSYListState<SearchPage> {
     if(selectIndex == 0){
       ReposViewModel reposViewModel =  ReposViewModel.fromMap(data);
       return new ReposItem(reposViewModel, onPressed: () {
-        print("仓库详情");
-        //todo 仓库详情
-//        NavigatorUtils.goReposDetail(context, reposViewModel.ownerName, reposViewModel.repositoryName);
+        NavigatorUtils.goReposDetail(context, reposViewModel.ownerName, reposViewModel.repositoryName);
       });
     } else if (selectIndex == 1) {
       return new UserItem(UserItemViewModel.fromMap(data), onPressed: () {

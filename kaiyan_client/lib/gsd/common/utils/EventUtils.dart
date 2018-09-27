@@ -122,13 +122,13 @@ class EventUtils {
   ///跳转
   static ActionUtils(BuildContext context, Event event, currentRepository) {
     if (event.repo == null) {
-      //todo 个人中心
       NavigatorUtils.goPerson(context, event.actor.login);
       return;
     }
     String owner = event.repo.name.split("/")[0];
     String repositoryName = event.repo.name.split("/")[1];
     String fullName = owner + '/' + repositoryName;
+    print(event.type);
     switch(event.type){
       case 'ForkEvent':
         String forkName = event.actor.login + "/" + repositoryName;
@@ -174,7 +174,7 @@ class EventUtils {
           return;
         }
         //TODO 仓库详情
-//        NavigatorUtils.goReposDetail(context, owner, repositoryName);
+        NavigatorUtils.goReposDetail(context, owner, repositoryName);
         break;
     }
 
