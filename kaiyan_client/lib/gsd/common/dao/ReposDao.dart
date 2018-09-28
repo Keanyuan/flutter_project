@@ -8,10 +8,12 @@ import 'package:get_version/get_version.dart';
 import 'package:kaiyan_client/gsd/common/ab/provider/repos/ReadHistoryDbProvider.dart';
 import 'package:kaiyan_client/gsd/common/ab/provider/repos/RepositoryCommitsDbProvider.dart';
 import 'package:kaiyan_client/gsd/common/ab/provider/repos/RepositoryDetailDbProvider.dart';
+import 'package:kaiyan_client/gsd/common/ab/provider/repos/RepositoryDetailReadmeDbProvider.dart';
 import 'package:kaiyan_client/gsd/common/ab/provider/repos/RepositoryEventDbProvider.dart';
 import 'package:kaiyan_client/gsd/common/ab/provider/repos/RepositoryForkDbProvider.dart';
 import 'package:kaiyan_client/gsd/common/ab/provider/repos/RepositoryStarDbProvider.dart';
 import 'package:kaiyan_client/gsd/common/ab/provider/repos/RepositoryWatcherDbProvider.dart';
+import 'package:kaiyan_client/gsd/common/ab/provider/repos/TrendRepositoryDbProvider.dart';
 import 'package:kaiyan_client/gsd/common/ab/provider/user/UserReposDbProvider.dart';
 import 'package:kaiyan_client/gsd/common/ab/provider/user/UserStaredDbProvider.dart';
 import 'package:kaiyan_client/gsd/common/config/Config.dart';
@@ -22,11 +24,15 @@ import 'package:kaiyan_client/gsd/common/model/PushCommit.dart';
 import 'package:kaiyan_client/gsd/common/model/Release.dart';
 import 'package:kaiyan_client/gsd/common/model/RepoCommit.dart';
 import 'package:kaiyan_client/gsd/common/model/Repository.dart';
+import 'package:kaiyan_client/gsd/common/model/TrendingRepoModel.dart';
 import 'package:kaiyan_client/gsd/common/model/User.dart';
 import 'package:kaiyan_client/gsd/common/net/Address.dart';
 import 'package:kaiyan_client/gsd/common/net/Api.dart';
+import 'package:kaiyan_client/gsd/common/net/GitHubTrending.dart';
+import 'package:kaiyan_client/gsd/common/redux/TrendRedux.dart';
 import 'package:kaiyan_client/gsd/common/utils/CommonUtils.dart';
 import 'package:pub_semver/pub_semver.dart';
+import 'package:redux/redux.dart';
 
 class ReposDao {
 
@@ -40,10 +46,16 @@ class ReposDao {
 //    }
 
     var res = await getRepositoryReleaseDao(
-        'Keanyuan', 'flutter_project', 1, release: false, needHtml: false );
-    if (res != null && res.result && res.data.lengtn > 0) {
-      Release release = res.data[0];
-      String versionName = release.name;
+        'CarGuo', 'GSYGithubAppFlutter', 1, release: true, needHtml: false );
+    var dataList = res.data.toList();
+
+    //暂时添加dataList
+    if (res != null && res.result && dataList != null ) {
+//      Release release = res.data[0];
+      var release = dataList[0];
+      String versionName = release["name"];
+
+//      String versionName = release.name;
       if (versionName != null) {
         if (Config.DEBUG) {
           print( "versionName " + versionName );
@@ -67,7 +79,9 @@ class ReposDao {
 
         if (result > 0) {
           CommonUtils.showUpdateDialog(
-              context, release.name + ": " + release.body );
+              context, release["name"] + ": " + release["body"] );
+//          CommonUtils.showUpdateDialog(
+//              context, release.name + ": " + release.body );
         } else {
           if (showTip) {
             Fluttertoast.showToast( msg: CommonUtils
@@ -98,6 +112,7 @@ class ReposDao {
           Address.getPageParams( "?", page );
     }
 
+    print(url);
 
     var res = await HttpManager.netFetch(
         url,
@@ -117,9 +132,12 @@ class ReposDao {
       }
       for (int i = 0; i < dataList.length; i++) {
         var data = dataList[i];
-        list.add( Release.fromJson( data ) );
+        list.add( Release.fromJson(data));
       }
-      return new DataResult( list, true );
+//      return new DataResult( list, true );
+
+      return new DataResult( dataList, true );
+
     } else {
       return new DataResult( null, false );
     }
@@ -688,5 +706,72 @@ class ReposDao {
     provider.insert(fullName, dateTime, data);
   }
 
+
+  /**
+   * 详情的remde数据
+   */
+  static getRepositoryDetailReadmeDao(userName, reposName, branch, {needDb = true}) async {
+    String fullName = userName + "/" + reposName;
+    RepositoryDetailReadmeDbProvider provider = new RepositoryDetailReadmeDbProvider();
+
+    next() async {
+      String url = Address.readmeFile(userName + '/' + reposName, branch);
+      var res = await HttpManager.netFetch(url, null, {"Accept": 'application/vnd.github.VERSION.raw'}, new Options(contentType: ContentType.text));
+      //var res = await HttpManager.netFetch(url, null, {"Accept": 'application/vnd.github.html'}, new Options(contentType: ContentType.text));
+      if (res != null && res.result) {
+        if (needDb) {
+          provider.insert(fullName, branch, res.data);
+        }
+        return new DataResult(res.data, true);
+      }
+      return new DataResult(null, false);
+    }
+
+    if (needDb) {
+      String readme = await provider.getRepositoryReadme(fullName, branch);
+      if (readme == null) {
+        return await next();
+      }
+      DataResult dataResult = new DataResult(readme, true, next: next());
+      return dataResult;
+    }
+    return await next();
+  }
+
+
+  /**
+   * 趋势数据
+   * @param page 分页，趋势数据其实没有分页
+   * @param since 数据时长， 本日，本周，本月
+   * @param languageType 语言
+   */
+  static getTrendDao(Store store, {since = 'daily', languageType, page = 0, needDb = true}) async {
+    TrendRepositoryDbProvider provider = new TrendRepositoryDbProvider();
+    String languageTypeDb = languageType ?? "*";
+    List<TrendingRepoModel> list = await provider.getData(languageTypeDb, since);
+    if (list != null && list.length > 0) {
+      store.dispatch(new RefreshTrendAction(list));
+    }
+    String url = Address.trending(since, languageType);
+    var res = await new GitHubTrending().fetchTrending(url);
+    if (res != null && res.result && res.data.length > 0) {
+      List<TrendingRepoModel> list = new List();
+      var data = res.data;
+      if (data == null || data.length == 0) {
+        return new DataResult(null, false);
+      }
+      if (needDb) {
+        provider.insert(languageTypeDb, since, json.encode(data));
+      }
+      for (int i = 0; i < data.length; i++) {
+        TrendingRepoModel model = data[i];
+        list.add(model);
+      }
+      store.dispatch(new RefreshTrendAction(list));
+      return new DataResult(list, true);
+    } else {
+      return new DataResult(null, false);
+    }
+  }
 }
 

@@ -135,8 +135,7 @@ class EventUtils {
         if (forkName.toLowerCase() == currentRepository.toLowerCase()) {
           return;
         }
-        //TODO 详情页
-//        NavigatorUtils.goReposDetail(context, event.actor.login, repositoryName);
+        NavigatorUtils.goReposDetail(context, event.actor.login, repositoryName);
         break;
       case 'PushEvent':
         if (event.payload.commits == null) {
@@ -144,10 +143,10 @@ class EventUtils {
             return;
           }
           //todo 仓库详情
-//          NavigatorUtils.goReposDetail(context, owner, repositoryName);
+          NavigatorUtils.goReposDetail(context, owner, repositoryName);
         } else if (event.payload.commits.length == 1) {
           //todo 提交详情
-//          NavigatorUtils.goPushDetailPage(context, owner, repositoryName, event.payload.commits[0].sha, true);
+          NavigatorUtils.goPushDetailPage(context, owner, repositoryName, event.payload.commits[0].sha, true);
         } else {
           List<String> list = new List();
           for (int i = 0; i < event.payload.commits.length; i++) {
@@ -155,25 +154,25 @@ class EventUtils {
           }
           CommonUtils.showCommitOptionDialog(context, list, (index) {
             //todo 提交详情
-//            NavigatorUtils.goPushDetailPage(context, owner, repositoryName, event.payload.commits[index].sha, true);
+            NavigatorUtils.goPushDetailPage(context, owner, repositoryName, event.payload.commits[index].sha, true);
           });
         }
         break;
       case 'ReleaseEvent':
         String url = event.payload.release.tarballUrl;
         //todo webview
-//        CommonUtils.launchWebView(context, repositoryName, url);
+        CommonUtils.launchWebView(context, repositoryName, url);
         break;
       case 'IssueCommentEvent':
       case 'IssuesEvent':
         //TODO issue详情
-//        NavigatorUtils.goIssueDetail(context, owner, repositoryName, event.payload.issue.number.toString(), needRightLocalIcon: true);
+        NavigatorUtils.goIssueDetail(context, owner, repositoryName, event.payload.issue.number.toString(), needRightLocalIcon: true);
         break;
       default:
+        print("fullName: $currentRepository \ncurrentRepository: $currentRepository");
         if (fullName.toLowerCase() == currentRepository.toLowerCase()) {
           return;
         }
-        //TODO 仓库详情
         NavigatorUtils.goReposDetail(context, owner, repositoryName);
         break;
     }

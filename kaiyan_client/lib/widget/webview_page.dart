@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
-//公共的WebView页面，需要标题和URL参数
+//TODO 公共的WebView页面，需要标题和URL参数
 class WebPageBaseController extends StatefulWidget {
 
   String title;
@@ -26,7 +26,6 @@ class _WebPageBaseState extends State<WebPageBaseController> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // 监听WebView的加载事件
     flutterWebViewPlugin.onStateChanged.listen((state){

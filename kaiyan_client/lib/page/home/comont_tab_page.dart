@@ -15,7 +15,7 @@ class ComontTabPage extends StatefulWidget {
   _ComontTabPageState createState() => _ComontTabPageState();
 }
 
-class _ComontTabPageState extends State<ComontTabPage> {
+class _ComontTabPageState extends State<ComontTabPage> with AutomaticKeepAliveClientMixin{
 
   dynamic _data;
   List<Widget> widget_list = <Widget>[];
@@ -114,4 +114,7 @@ class _ComontTabPageState extends State<ComontTabPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

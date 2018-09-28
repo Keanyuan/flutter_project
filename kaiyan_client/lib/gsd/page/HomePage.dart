@@ -88,7 +88,6 @@ class HomePage extends StatelessWidget {
           iconData: GSYICons.MAIN_SEARCH,
           needRightLocalIcon: true,
           onPressed: () {
-            //TODO goSearchPage
             NavigatorUtils.goSearchPage(context);
           },
         ),

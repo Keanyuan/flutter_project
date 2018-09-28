@@ -11,7 +11,7 @@ class Recommended extends StatefulWidget {
   _RecommendedState createState() => _RecommendedState();
 }
 
-class _RecommendedState extends State<Recommended> {
+class _RecommendedState extends State<Recommended> with AutomaticKeepAliveClientMixin{
 
   dynamic _data;
   List<Widget> widget_list = <Widget>[];
@@ -144,6 +144,9 @@ class _RecommendedState extends State<Recommended> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
 
 }

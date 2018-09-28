@@ -96,7 +96,7 @@ class CommonUtils {
                     child: new Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        new Container(child: SpinKitCubeGrid(color: Color(GSYColors.white))),
+                        new Container(child: SpinKitFadingGrid(color: Color(GSYColors.white))),
                         new Container(height: 10.0),
                         new Container(child: new Text(CommonUtils.getLocale(context).loading_text, style: GSYConstant.normalTextWhite)),
                       ],
@@ -342,6 +342,22 @@ class CommonUtils {
   static copy(String data, BuildContext context){
     Clipboard.setData(new ClipboardData(text: data));
     Fluttertoast.showToast(msg: CommonUtils.getLocale(context).option_share_copy_success);
+  }
+
+
+  //获取全名
+  static getFullName(String repository_url) {
+    if (repository_url != null && repository_url.substring(repository_url.length - 1) == "/") {
+      repository_url = repository_url.substring(0, repository_url.length - 1);
+    }
+    String fullName = '';
+    if (repository_url != null) {
+      List<String> splicurl = repository_url.split("/");
+      if (splicurl.length > 2) {
+        fullName = splicurl[splicurl.length - 2] + "/" + splicurl[splicurl.length - 1];
+      }
+    }
+    return fullName;
   }
 
 }

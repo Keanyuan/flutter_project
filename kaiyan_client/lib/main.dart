@@ -13,7 +13,6 @@ import 'package:kaiyan_client/gsd/common/utils/CommonUtils.dart';
 import 'package:kaiyan_client/gsd/page/HomePage.dart';
 import 'package:kaiyan_client/gsd/page/LoginPage.dart';
 import 'package:kaiyan_client/gsd/page/WelcomePage.dart';
-import 'package:kaiyan_client/main_page.dart';
 import 'package:kaiyan_client/page/home/home.dart';
 import 'package:kaiyan_client/page/mine/mine.dart';
 import 'package:kaiyan_client/page/subscription/subscription.dart';
@@ -35,7 +34,7 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue
       ),
-      home: MainPage(),
+      home: MainTabbarController(),
     );
   }
 

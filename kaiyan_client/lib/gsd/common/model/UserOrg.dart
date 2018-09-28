@@ -9,6 +9,7 @@ class UserOrg extends Object with _$UserOrgSerializerMixin{
   int id;
   String url;
   String description;
+  ///通过JsonKey重新定义参数名
   @JsonKey(name: "node_id")
   String nodeId;
   @JsonKey(name: "repos_url")

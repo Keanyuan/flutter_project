@@ -100,6 +100,7 @@ class _DynamicPageState extends GSYListState<DynamicPage> with WidgetsBindingObs
   //是否改变了应用的生命周期状态
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    //通过state判断App前后台切换
     if(state == AppLifecycleState.resumed){
       if (pullLoadWidgetControl.dataList.length != 0) {
         showRefreshLoading();

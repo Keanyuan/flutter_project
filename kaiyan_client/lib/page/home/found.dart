@@ -9,7 +9,8 @@ class Found extends StatefulWidget {
   _FoundState createState() => _FoundState();
 }
 
-class _FoundState extends State<Found> {
+class _FoundState extends State<Found> with AutomaticKeepAliveClientMixin{
+
 
   dynamic _data;
   List<Widget> widet_List = <Widget>[];
@@ -155,8 +156,10 @@ class _FoundState extends State<Found> {
   void addComments(){
     _data.data['itemList'].forEach((it){
       final item = it['data'];
-      //TODO
       widet_List.add(buildItem(item['cover']['feed'],  item['author']['icon'], item['author']['name'], item['title']));
     });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

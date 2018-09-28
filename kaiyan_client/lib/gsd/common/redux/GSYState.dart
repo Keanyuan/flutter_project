@@ -17,7 +17,6 @@ class GSYState {
   List<Event> eventList = new List();
 
   ///用户接受到的事件列表
-
   List<TrendingRepoModel> trendList = new List();
 
   ///主题数据

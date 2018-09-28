@@ -40,7 +40,6 @@ class ReadHistoryDbProvider extends BaseDbProvider{
 
   @override
   tableSqlString() {
-    // TODO: implement tableSqlString
     return tableBaseString(name, columnId) +
         '''
         $columnFullName text not null,

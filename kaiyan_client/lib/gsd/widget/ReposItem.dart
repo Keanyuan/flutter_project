@@ -55,7 +55,6 @@ class ReposItem extends StatelessWidget {
                             height: 40.0,
                             image: reposViewModel.ownerPic,
                             onPressed: () {
-                              //TODO 头像点击
                               NavigatorUtils.goPerson(context, reposViewModel.ownerName);
                             }),
                         new Expanded(

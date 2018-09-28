@@ -25,13 +25,13 @@ abstract class BasePersonState<T extends StatefulWidget> extends GSYListState<T>
     }
     if (userInfo.type == "Organization") {
       return new UserItem(UserItemViewModel.fromMap(pullLoadWidgetControl.dataList[index - 1]), onPressed: () {
-        //TODO 个人中心
+        // 个人中心
         NavigatorUtils.goPerson(context, UserItemViewModel.fromMap(pullLoadWidgetControl.dataList[index - 1]).userName);
       });
     } else {
       Event event = pullLoadWidgetControl.dataList[index - 1];
       return new EventItem(EventViewModel.fromEventMap(event), onPressed: () {
-        //TODO 个人中心
+        // 个人中心
         EventUtils.ActionUtils(context, event, "");
       });
     }

@@ -204,4 +204,51 @@ class Address {
     direction ??= 'desc';
     return "${host}repos/$reposOwner/$reposName/issues?state=$state&sort=$sort&direction=$direction";
   }
+
+  ///README 文件地址 get
+  static readmeFile(reposNameFullName, curBranch) {
+    return host + "repos/" + reposNameFullName + "/" + "readme" + ((curBranch == null) ? "" : ("?ref=" + curBranch));
+  }
+
+  ///搜索issue
+  static repositoryIssueSearch(q) {
+    return "${host}search/issues?q=$q";
+  }
+
+  ///仓库Issue评论 get
+  static getIssueComment(reposOwner, reposName, issueNumber) {
+    return "${host}repos/$reposOwner/$reposName/issues/$issueNumber/comments";
+  }
+
+  ///仓库Issue get
+  static getIssueInfo(reposOwner, reposName, issueNumber) {
+    return "${host}repos/$reposOwner/$reposName/issues/$issueNumber";
+  }
+
+  ///编辑issue put
+  static editIssue(reposOwner, reposName, issueNumber) {
+    return "${host}repos/$reposOwner/$reposName/issues/$issueNumber";
+  }
+
+  ///锁定issue put
+  static lockIssue(reposOwner, reposName, issueNumber) {
+    return "${host}repos/$reposOwner/$reposName/issues/$issueNumber/lock";
+  }
+  ///编辑评论 patch, delete
+  static editComment(reposOwner, reposName, commentId) {
+    return "${host}repos/$reposOwner/$reposName/issues/comments/$commentId";
+  }
+  ///增加issue评论 post
+
+  static addIssueComment(reposOwner, reposName, issueNumber) {
+    return "${host}repos/$reposOwner/$reposName/issues/$issueNumber/comments";
+  }
+
+  ///趋势 get
+  static trending(since, languageType) {
+    if (languageType != null) {
+      return "https://github.com/trending/$languageType?since=$since";
+    }
+    return "https://github.com/trending?since=$since";
+  }
 }

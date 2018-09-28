@@ -1,11 +1,14 @@
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:kaiyan_client/gsd/page/HomePage.dart';
 import 'package:kaiyan_client/gsd/page/LoginPage.dart';
 import 'package:kaiyan_client/gsd/page/SearchPage.dart';
 import 'package:kaiyan_client/gsd/page/my_page/CodeDetailPage.dart';
+import 'package:kaiyan_client/gsd/page/my_page/CodeDetailPageWeb.dart';
+import 'package:kaiyan_client/gsd/page/my_page/IssueDetailPage.dart';
 import 'package:kaiyan_client/gsd/page/my_page/PersonPage.dart';
 import 'package:kaiyan_client/gsd/page/my_page/PhotoViewPage.dart';
 import 'package:kaiyan_client/gsd/page/my_page/PushDetailPage.dart';
@@ -103,5 +106,58 @@ class NavigatorUtils {
         builder: (context) => new GSYWebView(url, title),
       ),
     );
+  }
+
+  ///issue详情
+  static Future<Null> goIssueDetail(BuildContext context, String userName, String reposName, String num, {bool needRightLocalIcon = false}) {
+    return Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => new IssueDetailPage(
+              userName,
+              reposName,
+              num,
+              needHomeIcon: needRightLocalIcon,
+            )));
+  }
+  ///根据平台跳转文件代码详情Web
+  static gotoCodeDetailPlatform(BuildContext context,
+      {String title, String userName, String reposName, String path, String data, String branch, String htmlUrl}) {
+    if (Platform.isIOS) {
+      NavigatorUtils.gotoCodeDetailPage(
+        context,
+        title: title,
+        reposName: reposName,
+        userName: userName,
+        path: path,
+        branch: branch,
+      );
+    } else {
+      NavigatorUtils.gotoCodeDetailPageWeb(
+        context,
+        title: title,
+        reposName: reposName,
+        userName: userName,
+        path: path,
+        branch: branch,
+      );
+    }
+  }
+
+  ///文件代码详情Web
+  static gotoCodeDetailPageWeb(BuildContext context,
+      {String title, String userName, String reposName, String path, String data, String branch, String htmlUrl}) {
+    Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => new CodeDetailPageWeb(
+              title: title,
+              userName: userName,
+              reposName: reposName,
+              path: path,
+              data: data,
+              branch: branch,
+              htmlUrl: htmlUrl,
+            )));
   }
 }

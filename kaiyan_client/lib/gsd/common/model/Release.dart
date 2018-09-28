@@ -5,7 +5,7 @@ import 'package:kaiyan_client/gsd/common/model/User.dart';
 part 'Release.g.dart';
 
 @JsonSerializable()
-class Release  extends Object with _$ReleaseSerializerMixin{
+class Release extends Object with _$ReleaseSerializerMixin {
   int id;
   @JsonKey(name: "tag_name")
   String tagName;
@@ -28,17 +28,25 @@ class Release  extends Object with _$ReleaseSerializerMixin{
   @JsonKey(name: "published_at")
   DateTime publishedAt;
 
-
   User author;
   List<ReleaseAsset> assets;
 
-  Release(this.id, this.tagName, this.targetCommitish, this.name, this.body,
-      this.bodyHtml, this.tarballUrl, this.zipballUrl, this.draft,
-      this.preRelease, this.createdAt, this.publishedAt, this.author,
-      this.assets);
+  Release(
+      this.id,
+      this.tagName,
+      @JsonKey(name: "target_commitish") this.targetCommitish,
+      this.name,
+      this.body,
+      this.bodyHtml,
+      this.tarballUrl,
+      this.zipballUrl,
+      this.draft,
+      this.preRelease,
+      this.createdAt,
+      this.publishedAt,
+      this.author,
+      this.assets,
+      );
 
   factory Release.fromJson(Map<String, dynamic> json) => _$ReleaseFromJson(json);
-
-
-
 }

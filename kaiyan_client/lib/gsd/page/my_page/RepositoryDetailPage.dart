@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kaiyan_client/gsd/common/dao/ReposDao.dart';
 import 'package:kaiyan_client/gsd/common/style/GSYColors.dart';
 import 'package:kaiyan_client/gsd/common/utils/CommonUtils.dart';
+import 'package:kaiyan_client/gsd/common/utils/NavigatorUtils.dart';
 import 'package:kaiyan_client/gsd/page/my_page/ReposDetailInfoPage.dart';
 import 'package:kaiyan_client/gsd/page/my_page/RepositoryDetailFileListPage.dart';
 import 'package:kaiyan_client/gsd/page/my_page/RepositoryDetailIssuePage.dart';
@@ -62,6 +63,18 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage>{
   //分支列表
   List<String> branchList = new List();
 
+
+
+  //获取分支列表
+  _getBranchList() async {
+    var result = await ReposDao.getBranchesDao(userName, reposName);
+    if (result != null && result.result) {
+      setState(() {
+        branchList = result.data;
+      });
+    }
+  }
+
   //获取仓库状态
   _getReposStatus() async {
     var result = await ReposDao.getRepositoryStatusDao(userName, reposName);
@@ -76,101 +89,92 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage>{
     });
   }
 
-  //获取分支列表
-  _getBranchList() async {
-    var result = await ReposDao.getBranchesDao(userName, reposName);
-    if (result != null && result.result) {
-      setState(() {
-        branchList = result.data;
-      });
-    }
-  }
-
   //刷新底部状态
-  _refresh() {
+  _refreshBottom() {
     this._getReposStatus();
   }
-
   //创建底部单个部件
-  _renderBottomItem(var text, var icon, var onPressed) {
+  _renderBottomItem(var text, var icon, var onPressed){
     return new FlatButton(
         onPressed: onPressed,
         child: new GSYIConText(
-          icon,
-          text,
-          GSYConstant.smallText,
-          Color(GSYColors.primaryValue),
-          15.0,
-          padding: 5.0,
-          mainAxisAlignment: MainAxisAlignment.center,
+            icon,
+            text,
+            GSYConstant.smallText,
+            Color(GSYColors.primaryValue),
+            15.0,
+            padding: 3.0,
+            mainAxisAlignment: MainAxisAlignment.center,
         ));
   }
 
   //获取底部部件
-  _getBottomWidget() {
+  _getBottomWidget(){
     List<Widget> bottomWidget = (bottomStatusModel == null)
         ? []
-        : <Widget>[
-      _renderBottomItem(bottomStatusModel.starText, bottomStatusModel.starIcon, () {
-        CommonUtils.showLoadingDialog(context);
-        return ReposDao.doRepositoryStarDao(userName, reposName, bottomStatusModel.star).then((result) {
-          _refresh();
-          Navigator.pop(context);
-        });
-      }),
-      _renderBottomItem(bottomStatusModel.watchText, bottomStatusModel.watchIcon, () {
-        CommonUtils.showLoadingDialog(context);
-        return ReposDao.doRepositoryWatchDao(userName, reposName, bottomStatusModel.watch).then((result) {
-          _refresh();
-          Navigator.pop(context);
-        });
-      }),
-      _renderBottomItem("fork", GSYICons.REPOS_ITEM_FORK, () {
-        CommonUtils.showLoadingDialog(context);
-        return ReposDao.createForkDao(userName, reposName).then((result) {
-          _refresh();
-          Navigator.pop(context);
-        });
-      }),
+        : [
+          _renderBottomItem(bottomStatusModel.starText, bottomStatusModel.starIcon, (){
+            CommonUtils.showLoadingDialog(context);
+            return ReposDao.doRepositoryStarDao(userName, reposName, bottomStatusModel.star).then((result) {
+              _refreshBottom();
+              Navigator.pop(context);
+            });
+          }),
+          _renderBottomItem(bottomStatusModel.watchText, bottomStatusModel.watchIcon, (){
+            CommonUtils.showLoadingDialog(context);
+            return ReposDao.doRepositoryWatchDao(userName, reposName, bottomStatusModel.watch).then((result) {
+              _refreshBottom();
+              Navigator.pop(context);
+            });
+          }),
+          _renderBottomItem("fock", GSYICons.REPOS_ITEM_FORK, (){
+            CommonUtils.showLoadingDialog(context);
+            return ReposDao.createForkDao(userName, reposName).then((result) {
+              _refreshBottom();
+              Navigator.pop(context);
+            });
+          })
     ];
     return bottomWidget;
   }
 
-  ///无奈之举，只能pageView配合tabbar，通过control同步
-  ///TabView 配合tabbar 在四个页面上问题太多
-  _renderTabItem() {
+  //pageView配合tabbar，通过control同步
+  _renderTabItem(){
     var itemList = [
       CommonUtils.getLocale(context).repos_tab_info,
       CommonUtils.getLocale(context).repos_tab_readme,
       CommonUtils.getLocale(context).repos_tab_issue,
       CommonUtils.getLocale(context).repos_tab_file,
     ];
-    renderItem(String item, int i) {
+
+    renderItem(String item, int i){
       return new FlatButton(
           padding: EdgeInsets.all(0.0),
-          onPressed: () {
+          onPressed: (){
             reposDetailParentControl.currentIndex = i;
+            //平移
             topPageControl.jumpTo(MediaQuery.of(context).size.width * i);
           },
           child: new Text(
             item,
             style: GSYConstant.smallTextWhite,
             maxLines: 1,
-          ));
+          )
+      );
     }
-
     List<Widget> list = new List();
-    for (int i = 0; i < itemList.length; i++) {
+    for(int i = 0; i < itemList.length; i ++){
       list.add(renderItem(itemList[i], i));
     }
     return list;
+
   }
 
   //创建更多按钮信息
-  _getMoreOtherItem() {
+  _getMoreOtherItem(){
     return [
-      ///Release Page
-      new GSYOptionModel(CommonUtils.getLocale(context).repos_option_release, CommonUtils.getLocale(context).repos_option_release, (model) {
+      //版本
+      new GSYOptionModel(CommonUtils.getLocale(context).repos_option_release, CommonUtils.getLocale(context).repos_option_release, (model){
         String releaseUrl = "";
         String tagUrl = "";
         if (infoListKey == null || infoListKey.currentState == null) {
@@ -183,10 +187,12 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage>{
           tagUrl =
           infoListKey.currentState.repository == null ? GSYConstant.app_default_share_url : infoListKey.currentState.repository.htmlUrl + "/tags";
         }
-        //todo
+        //TODO 版本信息
 //        NavigatorUtils.goReleasePage(context, userName, reposName, releaseUrl, tagUrl);
-      }),      ///Branch Page
-      new GSYOptionModel(CommonUtils.getLocale(context).repos_option_branch, CommonUtils.getLocale(context).repos_option_branch, (model) {
+
+      }),
+      //分支
+      new GSYOptionModel(CommonUtils.getLocale(context).repos_option_branch, CommonUtils.getLocale(context).repos_option_branch, (model){
         if(branchList.length == 0) {
           return;
         }
@@ -198,24 +204,22 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage>{
             infoListKey.currentState.showRefreshLoading();
           }
           if (fileListKey.currentState != null && fileListKey.currentState.mounted) {
-            //TODO
-//            fileListKey.currentState.showRefreshLoading();
+            fileListKey.currentState.showRefreshLoading();
           }
           if (readmeKey.currentState != null && readmeKey.currentState.mounted) {
-            //TODO
-//            readmeKey.currentState.refreshReadme();
+            readmeKey.currentState.refreshReadme();
           }
         });
       }),
     ];
   }
-
   @override
   void initState() {
     super.initState();
     _getBranchList();
-    _refresh();
+    _refreshBottom();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -242,6 +246,7 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage>{
       },
     );
   }
+
 }
 
 

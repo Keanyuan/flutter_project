@@ -1,9 +1,19 @@
 import 'package:json_annotation/json_annotation.dart';
 
+
+///关联文件、允许User访问 User.g.dart 中的私有方法
+///User.g.dart 是通过命令生成的文件。名称为 xx.g.dart，其中 xx 为当前 dart 文件名称
+///User.g.dart中创建了抽象类_$UserSerializerMixin，实现了_$TemplateFromJson方法
 part 'User.g.dart';
 
+///标志class需要实现json序列化功能
 @JsonSerializable()
 class User  extends Object with _$UserSerializerMixin {
+  ///'xx.g.dart'文件中，默认会根据当前类名如 AA 生成 _$AASerializerMixin
+
+  ///通过JsonKey重新定义参数名
+  /// @JsonKey(name: "push_id")
+  /// int pushId;
 
   String login;
   int id;
@@ -55,6 +65,7 @@ class User  extends Object with _$UserSerializerMixin {
       this.collaborators, this.two_factor_authentication);
 
 
+  ///'xx.g.dart'文件中，默认会根据当前类名如 AA 生成 _$AAeFromJson方法
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   User.empty();
 }

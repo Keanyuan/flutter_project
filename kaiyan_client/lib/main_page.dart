@@ -141,7 +141,6 @@ class _IconTextState extends State<IconText> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return ScopedModelDescendant<IndexModel>(
       builder: (ctx, child, model){
         return Expanded(

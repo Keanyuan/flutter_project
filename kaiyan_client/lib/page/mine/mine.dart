@@ -264,7 +264,6 @@ class _MineControllerState extends State<MineController> {
               ),
               onPressed: () {
                 Navigator.of(context).pop();
-                //TODO
                 Navigator.push(context, AnimationPageRoute(
                     sildeTween: Tween<Offset>(
                         begin: Offset(1.0, 0.0),

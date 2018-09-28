@@ -156,7 +156,7 @@ class HomeDrawer extends StatelessWidget {
                             style: GSYConstant.normalText,
                           ),
                           onTap: () {
-                            ReposDao.getNewsVersion(context, true);
+                            ReposDao.getNewsVersion(context, false);
                           }),
 
                       //关于
