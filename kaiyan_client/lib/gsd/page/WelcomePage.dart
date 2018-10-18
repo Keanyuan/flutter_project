@@ -38,7 +38,7 @@ class _WelcomePageState extends State<WelcomePage> {
     ///防止多次进入
     Store<GSYState> store = StoreProvider.of(context);
     CommonUtils.initStatusBarHeight(context);
-//    UserDao.clearAll(store);
+    UserDao.clearAll(store);
 //    EventDao.clearEvent(store);
 //    SqlManager.close();
     new Future.delayed(const Duration(seconds: 2), (){

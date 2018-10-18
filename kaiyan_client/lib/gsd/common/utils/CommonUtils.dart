@@ -62,6 +62,7 @@ class CommonUtils {
     themeData = new ThemeData(primarySwatch: colors[index], platform: TargetPlatform.iOS);
     store.dispatch(new RefreshThemeDataAction(themeData));
   }
+
   static List<Color> getThemeListColor() {
     return [
       GSYColors.primarySwatch,

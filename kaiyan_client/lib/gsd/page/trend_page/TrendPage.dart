@@ -64,7 +64,7 @@ class _TrendPageState extends GSYListState<TrendPage> {
               setState( () {
                 selectTime = result;
               } );
-              showRefreshLoading( );
+              showRefreshLoading();
             } ),
             new Container(
                 height: 10.0, width: 0.5, color: Color( GSYColors.white ) ),
@@ -88,7 +88,7 @@ class _TrendPageState extends GSYListState<TrendPage> {
   }
 
 
-  //渲染头部弹框按钮
+  //todo 渲染头部弹框按钮
   _renderHeaderPopItem(String data, List<TrendTypeModel> list, PopupMenuItemSelected<TrendTypeModel> onSelected) {
     return new Expanded(
       child: new PopupMenuButton<TrendTypeModel>(
