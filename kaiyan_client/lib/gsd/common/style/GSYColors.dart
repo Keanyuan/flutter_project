@@ -213,6 +213,8 @@ class GSYICons {
   static const String FONT_FAMILY = 'wxcIconFont';
 //gsy_default_img.png gsy_logo.png gsy_welcome.png
 
+  static const String HOME_TOP_BG = 'asset/images/ic_img_default.jpg';
+
   static const String DEFAULT_USER_ICON = 'asset/images/gsy_logo.png';
   static const String DEFAULT_USER_Login_ICON = 'asset/images/gsy_anji_login_logo.png';
   static const String DEFAULT_USER_BG_ICON = 'asset/images/author_account_bg.png';

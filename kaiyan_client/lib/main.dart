@@ -13,6 +13,7 @@ import 'package:kaiyan_client/gsd/common/utils/CommonUtils.dart';
 import 'package:kaiyan_client/gsd/page/HomePage.dart';
 import 'package:kaiyan_client/gsd/page/LoginPage.dart';
 import 'package:kaiyan_client/gsd/page/WelcomePage.dart';
+import 'package:kaiyan_client/page/find/find_controller.dart';
 import 'package:kaiyan_client/page/home/home.dart';
 import 'package:kaiyan_client/page/mine/mine.dart';
 import 'package:kaiyan_client/page/subscription/subscription.dart';
@@ -21,8 +22,8 @@ import 'package:kaiyan_client/util/constant.dart';
 import 'package:redux/redux.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
-void main() => runApp(new FlutterReduxApp());
+//FlutterReduxApp
+void main() => runApp(new MyApp());
 
 
 class MyApp extends StatelessWidget {
@@ -93,7 +94,7 @@ class _MainTabbarState extends State<MainTabbarController> {
       children: <Widget>[
         HomeViewController(),
         SubscriptionController(),
-        Text(appBarTitles[2]),
+        FindViewController(),
         MineController(),
       ],
       index: _tabIndex,
@@ -169,7 +170,7 @@ class _MainTabbarState extends State<MainTabbarController> {
 
 
 
-
+//-------------GSY-----------------
 class FlutterReduxApp extends StatelessWidget {
   /// 创建Store，引用 GSYState 中的 appReducer 实现 Reducer 方法
   /// initialState 初始化 State

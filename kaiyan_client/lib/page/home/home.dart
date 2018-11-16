@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:dio/dio.dart';
+import 'package:kaiyan_client/gsd/widget/my_tabs.dart';
 import 'package:kaiyan_client/page/home/comont_tab_page.dart';
 import 'package:kaiyan_client/page/home/dissertation.dart';
 import 'package:kaiyan_client/page/home/found.dart';
@@ -166,7 +167,7 @@ class _HomeViewControllerState extends State<HomeViewController> with SingleTick
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 8.0),
-      height: 44.0,
+      height: 100.0,
       child: Row(
         children: <Widget>[
 //          buildLiftItem(),

@@ -25,5 +25,4 @@ class GSYCardItem  extends StatelessWidget{
 
     return new Card(elevation: elevation, shape: shape, color: color, margin: margin, child: child,);
   }
-
 }

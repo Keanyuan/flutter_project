@@ -102,7 +102,7 @@ class _MineControllerState extends State<MineController> {
     }));
     if (result != null && result == "refresh") {
       // 刷新用户信息
-      getUserInfo();
+//      getUserInfo();
       // 通知动弹页面刷新
       Constant.eventBus.fire(new LoginEvent());
     }
@@ -286,11 +286,11 @@ class _MineControllerState extends State<MineController> {
 
   _handleListItemClick(String title){
 
-    Navigator.of(context).push(new MaterialPageRoute(
-        builder: (context) {
-          return new WebPageBaseController(title: "码云封面人物", url: "https://www.baidu.com");
-        }
-    ));
+//    Navigator.of(context).push(new MaterialPageRoute(
+//        builder: (context) {
+//          return new WebPageBaseController(title: "码云封面人物", url: "https://www.baidu.com");
+//        }
+//    ));
 
 
 //    DataUtils.isLogin().then((isLogin){
