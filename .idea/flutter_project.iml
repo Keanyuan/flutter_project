@@ -17,8 +17,54 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" generated="true" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_study/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_study/build" />
       <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/connectivity/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/connectivity/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/connectivity/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/connectivity/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/device_info/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/device_info/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/device_info/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/device_info/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/flutter_statusbar/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/flutter_statusbar/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/flutter_statusbar/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/flutter_statusbar/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/flutter_webview_plugin/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/flutter_webview_plugin/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/flutter_webview_plugin/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/flutter_webview_plugin/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/fluttertoast/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/fluttertoast/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/fluttertoast/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/fluttertoast/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/get_version/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/get_version/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/get_version/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/get_version/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/package_info/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/package_info/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/package_info/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/package_info/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/share/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/share/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/share/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/share/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/shared_preferences/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/shared_preferences/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/shared_preferences/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/shared_preferences/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/sqflite/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/sqflite/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/sqflite/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/sqflite/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/url_launcher/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/url_launcher/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/url_launcher/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kaiyan_client/ios/.symlinks/plugins/url_launcher/example/build" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 24 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
