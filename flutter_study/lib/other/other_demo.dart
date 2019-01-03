@@ -7,6 +7,7 @@ import 'package:flutter_study/other/constom_view_canvas/custom_circle_progress.d
 import 'package:flutter_study/other/constom_view_canvas/custom_image_view.dart';
 import 'package:flutter_study/other/constom_view_canvas/custom_label_view.dart';
 import 'package:flutter_study/other/constom_view_canvas/custom_view.dart';
+import 'package:flutter_study/other/movie/movies_page.dart';
 import 'package:flutter_study/other/sliver_appbar.dart';
 
 
@@ -50,6 +51,7 @@ class _MyHomePageState extends State<OtherListDemo> {
       "TurnBoxRoute",
       "CustomPaintRoute",
       "GradientCircularProgressRoute",
+      "MoviesPage",
     ]);
 
 
@@ -63,6 +65,7 @@ class _MyHomePageState extends State<OtherListDemo> {
       TurnBoxRoute(),
       CustomPaintRoute(),
       GradientCircularProgressRoute(),
+      MoviesPage(),
     ]);
 
 
