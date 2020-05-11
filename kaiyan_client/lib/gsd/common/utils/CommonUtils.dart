@@ -99,7 +99,7 @@ class CommonUtils {
                       children: <Widget>[
                         new Container(child: SpinKitFadingGrid(color: Color(GSYColors.white))),
                         new Container(height: 10.0),
-                        new Container(child: new Text(CommonUtils.getLocale(context).loading_text, style: GSYConstant.normalTextWhite)),
+//                        new Container(child: new Text(CommonUtils.getLocale(context).loading_text, style: GSYConstant.normalTextWhite)),
                       ],
                     ),
                   ),
